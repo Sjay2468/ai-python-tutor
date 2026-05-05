@@ -1,0 +1,31 @@
+{
+  "topic": "variables",
+  "lesson_id": "L01",
+  "rules": [
+    {
+      "id": "RB-VAR-01",
+      "keywords": ["variable", "what is", "store", "assign", "create"],
+      "intent": "concept_question",
+      "response": "A variable is a named container that stores a value. In Python, you create one by writing: name = value. For example: age = 19 stores the number 19 in a variable called 'age'. You can use that variable anywhere in your program."
+    },
+    {
+      "id": "RB-VAR-02",
+      "keywords": ["data type", "type", "int", "float", "str", "bool"],
+      "intent": "concept_question",
+      "response": "Python has four basic data types for beginners: int (whole numbers like 5), float (decimals like 3.14), str (text in quotes like 'Hello'), and bool (True or False). Python detects the type automatically — you don't need to declare it."
+    },
+    {
+      "id": "RB-VAR-03",
+      "keywords": ["nameerror", "not defined", "undefined", "name error"],
+      "intent": "error_explanation",
+      "error_type": "runtime",
+      "response": "A NameError means you used a variable that doesn't exist yet. This usually happens because: (1) you made a typo in the variable name, or (2) you tried to use it before creating it. Check the spelling and make sure the variable is assigned before you use it."
+    },
+    {
+      "id": "RB-VAR-04",
+      "keywords": ["hint", "variable", "practice", "question"],
+      "intent": "hint_request",
+      "response": "Remember: a variable stores a value using the = sign. The variable name goes on the left, the value on the right. Example: score = 100"
+    }
+  ]
+}

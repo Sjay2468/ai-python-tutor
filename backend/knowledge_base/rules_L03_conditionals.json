@@ -1,0 +1,32 @@
+{
+  "topic": "conditionals",
+  "lesson_id": "L03",
+  "rules": [
+    {
+      "id": "RB-CON-01",
+      "keywords": ["if", "else", "conditional", "what is", "decision", "elif"],
+      "intent": "concept_question",
+      "response": "Conditionals let your program make decisions. 'if' checks a condition; 'elif' checks another condition if the first was False; 'else' runs when no condition matched. Every if/elif/else line must end with a colon (:). The code inside must be indented with 4 spaces."
+    },
+    {
+      "id": "RB-CON-02",
+      "keywords": ["indentation", "indent", "spaces", "indentationerror"],
+      "intent": "error_explanation",
+      "error_type": "syntax",
+      "response": "An IndentationError means your code inside an if/elif/else/for/while/def block is not properly indented. Python requires exactly 4 spaces (or 1 tab, consistently) for code inside a block. Make sure all lines inside the block are aligned."
+    },
+    {
+      "id": "RB-CON-03",
+      "keywords": ["syntaxerror", "syntax error", "colon", "missing colon", "expected"],
+      "intent": "error_explanation",
+      "error_type": "syntax",
+      "response": "A SyntaxError before running often means a missing colon (:) at the end of an if, elif, else, for, while, or def line. Check that every such line ends with a colon. Also look for mismatched brackets or missing quotes."
+    },
+    {
+      "id": "RB-CON-04",
+      "keywords": ["nested", "nested if", "if inside if"],
+      "intent": "concept_question",
+      "response": "You can place an if statement inside another if statement — this is called nesting. Each nested level needs an additional 4 spaces of indentation. Be careful not to nest too deeply, as it makes code harder to read."
+    }
+  ]
+}

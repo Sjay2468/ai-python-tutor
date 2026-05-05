@@ -1,0 +1,30 @@
+{
+  "topic": "functions",
+  "lesson_id": "L05",
+  "rules": [
+    {
+      "id": "RB-FUN-01",
+      "keywords": ["function", "what is", "def", "define", "create function"],
+      "intent": "concept_question",
+      "response": "A function is a reusable block of code you define once and call as many times as needed. Define it with 'def function_name(parameters):' and call it with 'function_name(arguments)'. Use 'return' to send a value back to the caller."
+    },
+    {
+      "id": "RB-FUN-02",
+      "keywords": ["parameter", "argument", "input", "pass value"],
+      "intent": "concept_question",
+      "response": "Parameters are the variable names listed in the function definition: def greet(name). Arguments are the actual values you pass when calling: greet('Amina'). A function can have multiple parameters separated by commas: def add(a, b)."
+    },
+    {
+      "id": "RB-FUN-03",
+      "keywords": ["return", "what does return do", "return value"],
+      "intent": "concept_question",
+      "response": "'return' sends a value from the function back to wherever it was called. Without 'return', the function returns None. You can store the returned value: result = my_function(). Note: 'return' also immediately stops the function."
+    },
+    {
+      "id": "RB-FUN-04",
+      "keywords": ["default parameter", "default value", "optional argument"],
+      "intent": "concept_question",
+      "response": "A default parameter has a value assigned in the definition: def add(a, b=0). If the caller doesn't provide that argument, the default is used. Default parameters must come after required ones."
+    }
+  ]
+}

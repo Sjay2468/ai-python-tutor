@@ -1,0 +1,37 @@
+{
+  "topic": "operators",
+  "lesson_id": "L02",
+  "rules": [
+    {
+      "id": "RB-OPS-01",
+      "keywords": ["operator", "what is", "arithmetic", "plus", "minus", "multiply", "divide"],
+      "intent": "concept_question",
+      "response": "Operators are symbols that perform actions on values. Basic arithmetic operators are: + (add), - (subtract), * (multiply), / (divide), // (floor divide), % (remainder), ** (power). For example: 10 % 3 gives 1 (the remainder after dividing 10 by 3)."
+    },
+    {
+      "id": "RB-OPS-02",
+      "keywords": ["comparison", "equal", "==", "!=", "greater", "less", "compare"],
+      "intent": "concept_question",
+      "response": "Comparison operators compare two values and return True or False: == (equal to), != (not equal), > (greater than), < (less than), >= (greater or equal), <= (less or equal). Remember: == compares; = assigns a value."
+    },
+    {
+      "id": "RB-OPS-03",
+      "keywords": ["modulo", "remainder", "percent", "%"],
+      "intent": "concept_question",
+      "response": "The % operator (modulo) returns the remainder after division. For example: 10 % 3 = 1 because 10 ÷ 3 = 3 with a remainder of 1. It's useful for checking if a number is even (number % 2 == 0)."
+    },
+    {
+      "id": "RB-OPS-04",
+      "keywords": ["logical", "and", "or", "not", "boolean operator"],
+      "intent": "concept_question",
+      "response": "'and' returns True only if BOTH conditions are True. 'or' returns True if AT LEAST ONE condition is True. 'not' reverses True to False and False to True. Example: (5 > 3) and (2 < 4) → True."
+    },
+    {
+      "id": "RB-OPS-05",
+      "keywords": ["typeerror", "type error", "unsupported operand", "can only concatenate"],
+      "intent": "error_explanation",
+      "error_type": "runtime",
+      "response": "A TypeError usually means you are trying to combine incompatible types, like adding a string and a number: 'Age: ' + 19. Fix it by converting the number to a string: 'Age: ' + str(19) — or use an f-string: f'Age: {19}'."
+    }
+  ]
+}

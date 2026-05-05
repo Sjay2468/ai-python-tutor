@@ -1,0 +1,44 @@
+{
+  "topic": "errors_and_io",
+  "lesson_ids": ["L08", "L09"],
+  "rules": [
+    {
+      "id": "RB-ERR-01",
+      "keywords": ["error", "exception", "debug", "traceback", "what went wrong"],
+      "intent": "error_explanation",
+      "error_type": "general",
+      "response": "When Python shows an error, read the traceback from the bottom up: the last line tells you the error type and message; above it shows the line number where it happened. Common beginner errors: SyntaxError, NameError, TypeError, IndexError, ZeroDivisionError, KeyError."
+    },
+    {
+      "id": "RB-ERR-02",
+      "keywords": ["zerodivisionerror", "divide by zero", "zero division"],
+      "intent": "error_explanation",
+      "error_type": "runtime",
+      "response": "A ZeroDivisionError occurs when you divide a number by zero (10 / 0). Fix it by checking the divisor before dividing: if b != 0: result = a / b else: print('Cannot divide by zero')."
+    },
+    {
+      "id": "RB-ERR-03",
+      "keywords": ["try", "except", "try except", "handle error", "catch error"],
+      "intent": "concept_question",
+      "response": "Use try/except to handle errors without crashing: try: risky_code() except ErrorType: handle_it(). The 'except' block only runs if the specified error occurs in the 'try' block. Use 'except Exception as e: print(e)' to catch and display any error."
+    },
+    {
+      "id": "RB-IO-01",
+      "keywords": ["input", "what is input", "user input", "input()"],
+      "intent": "concept_question",
+      "response": "input() pauses the program and waits for the user to type something. It always returns a string: user_name = input('Enter your name: '). To get a number, convert it: age = int(input('Enter your age: ')). Without conversion, arithmetic will cause a TypeError."
+    },
+    {
+      "id": "RB-IO-02",
+      "keywords": ["print", "output", "display", "f-string", "format"],
+      "intent": "concept_question",
+      "response": "print() displays values to the screen. You can pass multiple values separated by commas: print('Hello', name). For formatted output, use f-strings: print(f'Hello, {name}! You are {age} years old.') — variables go inside curly braces {}."
+    },
+    {
+      "id": "RB-OUT-01",
+      "keywords": ["out of scope", "not python", "off topic", "unrelated"],
+      "intent": "out_of_scope",
+      "response": "I can only help with beginner Python topics: variables, data types, operators, conditionals, loops, functions, lists, dictionaries, error types, and basic I/O. Try asking about one of those topics!"
+    }
+  ]
+}

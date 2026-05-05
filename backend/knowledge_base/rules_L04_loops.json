@@ -1,0 +1,37 @@
+{
+  "topic": "loops",
+  "lesson_id": "L04",
+  "rules": [
+    {
+      "id": "RB-LOOP-01",
+      "keywords": ["loop", "for loop", "what is", "repeat", "iterate"],
+      "intent": "concept_question",
+      "response": "A loop repeats a block of code multiple times. A 'for' loop repeats a fixed number of times using range() or over a list. A 'while' loop repeats as long as a condition stays True. Always indent the loop body with 4 spaces."
+    },
+    {
+      "id": "RB-LOOP-02",
+      "keywords": ["range", "range()", "how does range work"],
+      "intent": "concept_question",
+      "response": "range(n) generates numbers from 0 up to (but not including) n. range(2, 6) gives 2, 3, 4, 5. range(0, 10, 2) gives even numbers: 0, 2, 4, 6, 8. Use it in a for loop: 'for i in range(5)' loops 5 times."
+    },
+    {
+      "id": "RB-LOOP-03",
+      "keywords": ["infinite loop", "loop never stops", "while true", "stuck"],
+      "intent": "error_explanation",
+      "error_type": "logic",
+      "response": "An infinite loop happens when a while loop's condition never becomes False. This usually means you forgot to update the counter variable inside the loop. For example: 'count += 1' must be inside the loop body to eventually make 'count < 3' False."
+    },
+    {
+      "id": "RB-LOOP-04",
+      "keywords": ["break", "continue", "exit loop", "skip"],
+      "intent": "concept_question",
+      "response": "'break' immediately exits the loop entirely. 'continue' skips the rest of the current iteration and moves to the next one. Both are used inside for or while loops to control flow."
+    },
+    {
+      "id": "RB-LOOP-05",
+      "keywords": ["while loop", "what is", "when to use while"],
+      "intent": "concept_question",
+      "response": "A while loop runs as long as its condition is True. Use it when you don't know in advance how many times to repeat — for example, keeping asking for user input until they enter a valid value. Always make sure the condition can eventually become False."
+    }
+  ]
+}

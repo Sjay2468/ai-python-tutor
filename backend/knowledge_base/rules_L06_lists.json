@@ -1,0 +1,31 @@
+{
+  "topic": "lists",
+  "lesson_id": "L06",
+  "rules": [
+    {
+      "id": "RB-LST-01",
+      "keywords": ["list", "what is", "create list", "array"],
+      "intent": "concept_question",
+      "response": "A list is an ordered collection of items in a single variable, created with square brackets: fruits = ['apple', 'banana', 'cherry']. Lists can hold any data type and allow duplicates. Access items by index starting at 0: fruits[0] gives 'apple'."
+    },
+    {
+      "id": "RB-LST-02",
+      "keywords": ["append", "add to list", "add item", "insert"],
+      "intent": "concept_question",
+      "response": "Use append() to add one item to the end of a list: fruits.append('mango'). Use insert(index, item) to add at a specific position. Use extend() to add multiple items from another list."
+    },
+    {
+      "id": "RB-LST-03",
+      "keywords": ["indexerror", "index out of range", "list index"],
+      "intent": "error_explanation",
+      "error_type": "runtime",
+      "response": "An IndexError means you tried to access an index that doesn't exist. If a list has 3 items, valid indices are 0, 1, and 2 — index 3 or higher causes IndexError. Use len(list) to check the size before accessing by index."
+    },
+    {
+      "id": "RB-LST-04",
+      "keywords": ["negative index", "last item", "fruits[-1]"],
+      "intent": "concept_question",
+      "response": "Negative indices count from the end of the list. -1 is the last item, -2 is the second to last, etc. For example: fruits[-1] gives the last fruit without needing to know the length of the list."
+    }
+  ]
+}

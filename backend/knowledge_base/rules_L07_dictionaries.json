@@ -1,0 +1,31 @@
+{
+  "topic": "dictionaries",
+  "lesson_id": "L07",
+  "rules": [
+    {
+      "id": "RB-DCT-01",
+      "keywords": ["dictionary", "what is", "dict", "key value", "key-value"],
+      "intent": "concept_question",
+      "response": "A dictionary stores data as key-value pairs using curly braces: student = {'name': 'Amina', 'age': 19}. Access values with their key: student['name'] gives 'Amina'. Keys must be unique; values can repeat."
+    },
+    {
+      "id": "RB-DCT-02",
+      "keywords": ["keyerror", "key error", "key not found"],
+      "intent": "error_explanation",
+      "error_type": "runtime",
+      "response": "A KeyError means you tried to access a key that doesn't exist in the dictionary. Check the exact spelling of the key. Use dict.get('key') instead of dict['key'] to avoid an error — get() returns None if the key is missing."
+    },
+    {
+      "id": "RB-DCT-03",
+      "keywords": ["add to dictionary", "update dictionary", "new key"],
+      "intent": "concept_question",
+      "response": "Add or update a key-value pair using assignment: student['grade'] = 'A'. If the key already exists, its value is updated. If it's new, it's added. To remove a key, use: del student['key'] or student.pop('key')."
+    },
+    {
+      "id": "RB-DCT-04",
+      "keywords": ["keys", "values", "items", "loop dictionary", "iterate dictionary"],
+      "intent": "concept_question",
+      "response": "Loop over a dictionary with: for key in student — this gives each key. Use student.values() for all values, and student.items() for key-value pairs: for key, value in student.items(): print(key, value)."
+    }
+  ]
+}

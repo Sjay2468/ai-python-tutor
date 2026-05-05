@@ -19,6 +19,9 @@ def create_app(config_object="config.Config"):
     bcrypt.init_app(app)
     CORS(app)
 
+    # Import models so SQLAlchemy registers them (required before db.create_all)
+    from app.models import User, Lesson, PracticeQuestion, UserProgress, ChatLog  # noqa: F401
+
     # Register blueprints
     from app.routes.auth import auth_bp
     from app.routes.lessons import lessons_bp

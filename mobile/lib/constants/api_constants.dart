@@ -1,7 +1,7 @@
 /// Central place for all API endpoint constants.
 class ApiConstants {
-  // Change this to your deployed backend URL in production
-  static const String baseUrl = 'http://10.0.2.2:5000/api/v1'; // Android emulator -> localhost
+  // Deployed production backend URL
+  static const String baseUrl = 'https://ai-python-tutor-l4j1eo42k-shelterugwa-7093s-projects.vercel.app/api/v1';
 
   // Auth
   static const String register = '$baseUrl/auth/register';

@@ -44,7 +44,7 @@ def get_all_lessons():
         score = p.practice_score if p else None
         result.append(lesson.to_dict(status=status))
 
-    return jsonify({"lessons": result}), 200
+    return jsonify({"lessons": result, "topics": result}), 200
 
 
 @lessons_bp.route("/<string:topic_id>", methods=["GET"])

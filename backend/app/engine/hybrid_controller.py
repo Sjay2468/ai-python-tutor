@@ -18,10 +18,11 @@ from typing import Optional
 from datetime import datetime, timezone
 
 from .rule_engine import rule_engine, INTENT_OOS
-from .nlp_module import call_gpt4
+from .nlp_module import call_gemini
 
 # Validation constants (PRD §12.2)
-_MAX_RESPONSE_WORDS = 300
+# NOTE: No word-count cap — responses are never truncated for length.
+#       Only content-based checks (off-topic, advanced terms) are applied.
 _OOS_MARKER = "I can only help with beginner Python topics"
 
 # Terms that flag an advanced/off-topic GPT-4 response
@@ -35,24 +36,20 @@ _BANNED_ADVANCED_TERMS = [
 
 def _validate_response(text: str, query: str) -> bool:
     """
-    Returns True if the GPT-4 response passes all validation checks.
+    Returns True if the Gemini response passes all content checks.
     Checks (PRD §12.2):
-      1. Off-topic check   — response contains OOS marker
-      2. Length check      — response > 300 words
-      3. Advanced content  — response mentions banned advanced terms
+      1. Off-topic check  — response contains OOS marker
+      2. Advanced content — response mentions banned advanced terms
+    NOTE: Length is NOT checked — responses of any length are accepted.
     """
     if not text:
         return False
 
-    # Check 1: GPT-4 itself flagged the query as out-of-scope
+    # Check 1: Model itself flagged the query as out-of-scope
     if _OOS_MARKER.lower() in text.lower():
         return False
 
-    # Check 2: Response too long
-    if len(text.split()) > _MAX_RESPONSE_WORDS:
-        return False
-
-    # Check 3: Advanced / off-topic content
+    # Check 2: Advanced / off-topic content
     text_lower = text.lower()
     for term in _BANNED_ADVANCED_TERMS:
         if term.lower() in text_lower:
@@ -148,7 +145,7 @@ class HybridController:
 
         # ── Step 3: GPT-4 Call ───────────────────────────────────────────────
         topic_title = _get_topic_title(topic_id)
-        nlp_result = call_gpt4(
+        nlp_result = call_gemini(
             user_query=query,
             topic_title=topic_title,
             user_id=user_id,

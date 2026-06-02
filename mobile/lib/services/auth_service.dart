@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
+import '../constants/api_constants.dart';
 
 /// Manages authentication state: login, registration, token persistence.
 class AuthService extends ChangeNotifier {
@@ -40,5 +42,48 @@ class AuthService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     notifyListeners();
+  }
+
+  /// Perform login against the Flask backend
+  Future<bool> login(String email, String password) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        ApiConstants.login,
+        data: {'email': email, 'password': password},
+      );
+      if (response.statusCode == 200) {
+        final data = response.data;
+        await saveSession(data['token'], data['user']);
+        return true;
+      }
+    } catch (e) {
+      debugPrint('Login error: $e');
+    }
+    return false;
+  }
+
+  /// Perform registration against the Flask backend
+  Future<bool> register(String fullName, String email, String password, String skillLevel) async {
+    final dio = Dio();
+    try {
+      final response = await dio.post(
+        ApiConstants.register,
+        data: {
+          'full_name': fullName,
+          'email': email,
+          'password': password,
+          'skill_level': skillLevel,
+        },
+      );
+      if (response.statusCode == 201) {
+        final data = response.data;
+        await saveSession(data['token'], data['user']);
+        return true;
+      }
+    } catch (e) {
+      debugPrint('Registration error: $e');
+    }
+    return false;
   }
 }

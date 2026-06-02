@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import '../constants/app_theme.dart';
+import 'package:provider/provider.dart';
+import '../../constants/app_theme.dart';
+import '../../services/auth_service.dart';
+import 'welcome_screen.dart';
+import '../home_screen.dart';
 
 /// Minimal, centered splash screen that checks auth state and routes accordingly.
 class SplashScreen extends StatefulWidget {
@@ -13,7 +17,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigation logic will be added in Phase 5 (auth check)
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    final auth = context.read<AuthService>();
+    await auth.loadToken();
+
+    // Add a tiny delay to ensure the splash is visible
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (!mounted) return;
+
+    if (auth.isAuthenticated) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+      );
+    }
   }
 
   @override

@@ -7,10 +7,12 @@ progress_bp = Blueprint("progress", __name__)
 
 
 @progress_bp.route("", methods=["GET"])
+@progress_bp.route("/summary", methods=["GET"])
 @jwt_required()
 def get_full_progress():
     """
     GET /api/v1/progress
+    GET /api/v1/progress/summary
     Return the full progress summary for the authenticated user.
     Includes per-topic status and overall completion %.
     """
@@ -31,8 +33,9 @@ def get_full_progress():
         p = progress_map.get(lesson.id)
         status = p.status if p else "not_started"
         score = p.practice_score if p else None
+        is_mastered = status == "mastered"
 
-        if status == "mastered":
+        if is_mastered:
             mastered_count += 1
 
         # Track most recently accessed topic
@@ -43,9 +46,12 @@ def get_full_progress():
 
         topic_breakdown.append({
             "id": lesson.id,
+            "topic_id": lesson.id,
             "title": lesson.title,
             "status": status,
+            "is_mastered": is_mastered,
             "practice_score": score,
+            "mastery_score": score,
             "order_index": lesson.order_index,
         })
 
@@ -54,6 +60,7 @@ def get_full_progress():
 
     return jsonify({
         "overall_percentage": overall_pct,
+        "overall_progress_percentage": overall_pct,
         "mastered_count": mastered_count,
         "total_topics": total_topics,
         "all_complete": mastered_count == total_topics and total_topics > 0,

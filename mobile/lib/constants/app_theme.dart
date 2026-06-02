@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-/// Minimal, clean, high-quality UI theme for the Python Tutor app.
-/// Inspired by Material 3 design with a focused beginner-friendly aesthetic.
+/// Python Learning System — Soft Minimalism
+/// Extracted from Stitch Design System
 class AppTheme {
   // -- Color Palette --
-  static const Color primary = Color(0xFF1A56DB);       // Calm blue
-  static const Color primaryLight = Color(0xFFEBF0FB);  // Soft blue tint
-  static const Color accent = Color(0xFF0EA5E9);         // Sky blue accent
-  static const Color success = Color(0xFF22C55E);        // Green for mastered
-  static const Color warning = Color(0xFFF59E0B);        // Amber for in-progress
-  static const Color error = Color(0xFFEF4444);          // Red for errors
-  static const Color background = Color(0xFFF8FAFC);     // Off-white background
-  static const Color surface = Color(0xFFFFFFFF);        // White cards
-  static const Color textPrimary = Color(0xFF0F172A);    // Near-black
-  static const Color textSecondary = Color(0xFF64748B);  // Slate grey
-  static const Color divider = Color(0xFFE2E8F0);        // Light border
+  static const Color primary = Color(0xFF005DA7);       // Soft Blue
+  static const Color primaryLight = Color(0xFFD4E3FF);  // Primary fixed
+  static const Color accent = Color(0xFF674BB5);        // Light Purple
+  static const Color success = Color(0xFF006B2D);       // Tertiary / Success
+  static const Color warning = Color(0xFFF59E0B);       // Amber
+  static const Color error = Color(0xFFBA1A1A);         // Error Red
+  
+  static const Color background = Color(0xFFF9F9FF);    // Off-white
+  static const Color surface = Color(0xFFFFFFFF);       // Cards
+  static const Color textPrimary = Color(0xFF121C2A);   // On-Surface
+  static const Color textSecondary = Color(0xFF414751); // On-Surface-Variant
+  static const Color divider = Color(0xFFC1C7D3);       // Outline-Variant
 
   // -- Code block --
-  static const Color codeBackground = Color(0xFF1E293B); // Dark slate for code
-  static const Color codeText = Color(0xFFE2E8F0);
+  static const Color codeBackground = Color(0xFFEFF3FF); // Soft Gray/Blue
+  static const Color codeText = Color(0xFF121C2A);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -33,23 +35,23 @@ class AppTheme {
         onSurface: textPrimary,
       ),
       scaffoldBackgroundColor: background,
-      appBarTheme: const AppBarTheme(
-        backgroundColor: surface,
+      appBarTheme: AppBarTheme(
+        backgroundColor: background, // Keeps it seamless with background
         foregroundColor: textPrimary,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: TextStyle(
+        titleTextStyle: GoogleFonts.plusJakartaSans(
           color: textPrimary,
-          fontSize: 18,
+          fontSize: 20,
           fontWeight: FontWeight.w600,
-          letterSpacing: -0.3,
+          letterSpacing: -0.01,
         ),
       ),
       cardTheme: CardThemeData(
         color: surface,
-        elevation: 0,
+        elevation: 0, // Level 1 Card: 1px border, soft shadow (added via BoxShadow in widgets)
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: divider, width: 1),
         ),
         margin: EdgeInsets.zero,
@@ -60,13 +62,13 @@ class AppTheme {
           foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 52),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(16),
           ),
-          textStyle: const TextStyle(
+          textStyle: GoogleFonts.lexend(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
-          elevation: 0,
+          elevation: 2, // Skeuomorphic hint
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -75,9 +77,9 @@ class AppTheme {
           minimumSize: const Size(double.infinity, 52),
           side: const BorderSide(color: primary),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(16),
           ),
-          textStyle: const TextStyle(
+          textStyle: GoogleFonts.lexend(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -87,62 +89,65 @@ class AppTheme {
         filled: true,
         fillColor: surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: divider),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: divider),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: primary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: error),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        hintStyle: const TextStyle(color: textSecondary, fontSize: 15),
-        labelStyle: const TextStyle(color: textSecondary, fontSize: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        hintStyle: GoogleFonts.lexend(color: textSecondary, fontSize: 16),
+        labelStyle: GoogleFonts.lexend(color: textSecondary, fontSize: 14),
       ),
-      textTheme: const TextTheme(
-        headlineLarge: TextStyle(
-          fontSize: 28,
+      textTheme: TextTheme(
+        headlineLarge: GoogleFonts.plusJakartaSans(
+          fontSize: 30,
           fontWeight: FontWeight.w700,
           color: textPrimary,
-          letterSpacing: -0.5,
+          height: 38 / 30,
+          letterSpacing: -0.02,
         ),
-        headlineMedium: TextStyle(
-          fontSize: 22,
+        headlineMedium: GoogleFonts.plusJakartaSans(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: textPrimary,
+          height: 30 / 24,
+          letterSpacing: -0.01,
+        ),
+        titleLarge: GoogleFonts.plusJakartaSans(
+          fontSize: 20,
           fontWeight: FontWeight.w600,
           color: textPrimary,
-          letterSpacing: -0.3,
         ),
-        titleLarge: TextStyle(
+        titleMedium: GoogleFonts.lexend(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        titleMedium: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+        bodyLarge: GoogleFonts.lexend(
+          fontSize: 18,
           color: textPrimary,
+          height: 28 / 18,
         ),
-        bodyLarge: TextStyle(
+        bodyMedium: GoogleFonts.lexend(
           fontSize: 16,
-          color: textPrimary,
-          height: 1.6,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 14,
           color: textSecondary,
-          height: 1.5,
+          height: 24 / 16,
         ),
-        labelLarge: TextStyle(
+        labelLarge: GoogleFonts.lexend(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: primary,
+          letterSpacing: 0.02,
         ),
       ),
       dividerTheme: const DividerThemeData(
@@ -151,9 +156,10 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: primaryLight,
-        labelStyle: const TextStyle(color: primary, fontSize: 13),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        labelStyle: GoogleFonts.lexend(color: primary, fontSize: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        side: BorderSide.none,
       ),
     );
   }

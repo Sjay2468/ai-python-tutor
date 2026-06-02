@@ -1,9 +1,30 @@
 """
-Seed script — Run once to populate the database with all lesson content,
-practice questions, and rule-base entries.
+Seed script — Batch 1 (Amateur Tier)
+======================================
+Populates the database with the first 3 lessons of the Amateur tier:
+  L01: Variables & Data Types
+  L02: Operators
+  L03: Basic I/O (input / print)   ← moved up so students can test code early
+
+Topic hierarchy:
+  🟢 AMATEUR  (beginner)    — L01, L02, L03
+  🟡 INTERMEDIATE            — L04, L05, L06
+  🔴 PRO (advanced)          — L07, L08, L09
+
+Sources:
+  T1 = Think Python 3rd ed. (Downey, 2024)   — Ch. 1–3
+  T2 = Automate the Boring Stuff (Sweigart)   — Ch. 1
+  T3 = Python Crash Course 3rd ed. (Matthes)  — Ch. 2
+  O1 = W3Schools Python Tutorial
+  O2 = Programiz — Learn Python
+  O5 = Python Official Documentation (docs.python.org/3)
+  R1 = Researcher-authored practice questions (Ayegba Shelter Iye)
+  R2 = Real-world analogies (researcher-authored, Nigerian student context)
+  E1 = Farah et al. (2023) — Common Python Errors Among Novice Learners
+  E4 = Altadmri & Brown (2015) — 37 Million Compilations
 
 Usage (from backend/ folder):
-    .\\venv\\Scripts\\python seed.py
+    .\\venv\\Scripts\\python seed_batch1.py
 """
 import json
 import sys
@@ -15,237 +36,313 @@ from app.models import Lesson, PracticeQuestion
 
 app = create_app()
 
-# ─────────────────────────────────────────────
-# LESSON DATA  (9 topics)
-# Sources: T1=Think Python, O1=W3Schools, O2=Programiz, R1=Researcher-authored
-# ─────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# LESSON DATA  — Amateur Tier (difficulty = "beginner")
+# ─────────────────────────────────────────────────────────────────────────────
 LESSONS = [
     {
         "id": "L01",
         "title": "Variables & Data Types",
         "order_index": 1,
+        "difficulty": "beginner",
         "explanation": (
-            "A variable is a named storage location in your program's memory. "
-            "You create one by writing a name, an equals sign, and a value. "
-            "Python figures out the type automatically — you don't need to declare it. "
-            "The four most common beginner data types are:\n"
-            "  • int   — whole numbers  (e.g. 5, -3, 100)\n"
-            "  • float — decimal numbers (e.g. 3.14, -0.5)\n"
-            "  • str   — text in quotes  (e.g. \"Hello\")\n"
-            "  • bool  — True or False"
+            "WHAT IS A VARIABLE?\n"
+            "A variable is a named storage location in your computer's memory that holds a value. "
+            "You create a variable by writing a name, followed by an equals sign (=), "
+            "followed by the value you want to store. "
+            "In Python, you do not need to declare the type — Python automatically detects it for you "
+            "(this is called dynamic typing). [Source: T1 Ch.2, O1]\n\n"
+            "NAMING RULES (O5 — Python Docs):\n"
+            "  • Names can only contain letters (a–z, A–Z), digits (0–9), and underscores (_)\n"
+            "  • Names CANNOT start with a digit (e.g. '2score' is invalid)\n"
+            "  • Names are CASE-SENSITIVE: 'age' and 'Age' are two completely different variables\n"
+            "  • Avoid using Python reserved words like 'if', 'for', 'while' as variable names\n\n"
+            "THE FOUR CORE DATA TYPES:\n"
+            "  • int   — whole numbers with no decimal point  (e.g. 5, -3, 100, 0)\n"
+            "  • float — numbers with a decimal point         (e.g. 3.14, -0.5, 2.0)\n"
+            "  • str   — text (a sequence of characters) enclosed in quotes  (e.g. \"Hello\", 'Python')\n"
+            "  • bool  — logical values: exactly True or False (capital T and F required)\n\n"
+            "CHECKING THE TYPE:\n"
+            "You can always ask Python what type a variable is by using the built-in type() function. "
+            "This is especially useful when debugging. [Source: T1 Ch.2, O2]\n\n"
+            "REASSIGNING VARIABLES:\n"
+            "Unlike a constant, a variable's value can be changed at any time simply by assigning "
+            "a new value to the same name. Python will forget the old value and remember the new one. "
+            "[Source: T3 Ch.2]"
         ),
         "analogy": (
-            "Think of a variable like a labelled box. The label is the variable name, "
-            "and whatever you put inside the box is the value. "
-            "You can change what's inside the box at any time."
+            "Think of a variable like a labelled box in a storage room. "
+            "The label on the box is the variable name, and whatever you put inside the box is the value. "
+            "You can have many boxes with different labels (name, age, score), each holding different things. "
+            "At any time you can open a box and replace what's inside — that's reassignment. "
+            "Python reads the label to find the right box, not the position on the shelf. [R2]"
         ),
         "code_example": (
-            "# Creating variables\n"
-            "name = \"Amina\"       # str\n"
-            "age = 19             # int\n"
-            "gpa = 3.8            # float\n"
-            "is_student = True    # bool\n\n"
-            "# Printing values\n"
-            "print(name)          # Output: Amina\n"
-            "print(age)           # Output: 19\n"
-            "print(type(gpa))     # Output: <class 'float'>"
+            "# ── Creating variables of each data type ──────────────────────\n"
+            "name       = \"Amina\"       # str   — text in quotes\n"
+            "age        = 19             # int   — whole number\n"
+            "gpa        = 3.8            # float — decimal number\n"
+            "is_student = True           # bool  — True or False\n\n"
+            "# ── Printing variable values ───────────────────────────────────\n"
+            "print(name)                 # Output: Amina\n"
+            "print(age)                  # Output: 19\n"
+            "print(gpa)                  # Output: 3.8\n"
+            "print(is_student)           # Output: True\n\n"
+            "# ── Checking the data type ────────────────────────────────────\n"
+            "print(type(name))           # Output: <class 'str'>\n"
+            "print(type(age))            # Output: <class 'int'>\n"
+            "print(type(gpa))            # Output: <class 'float'>\n\n"
+            "# ── Reassigning a variable ────────────────────────────────────\n"
+            "age = 20                    # age is now 20, not 19\n"
+            "print(age)                  # Output: 20\n\n"
+            "# ── Multiple assignment on one line ──────────────────────────\n"
+            "x, y, z = 1, 2, 3          # x=1, y=2, z=3\n"
+            "print(x, y, z)             # Output: 1 2 3"
         ),
         "code_breakdown": (
-            "Line 2: name = \"Amina\" — creates a variable called 'name' storing the text Amina.\n"
-            "Line 3: age = 19 — stores the whole number 19 in 'age'.\n"
-            "Line 4: gpa = 3.8 — stores a decimal number in 'gpa'.\n"
-            "Line 5: is_student = True — stores a boolean (True/False) value.\n"
-            "Line 8: print(name) — displays the value stored in 'name'.\n"
-            "Line 10: type(gpa) — returns the data type of a variable."
+            "Line 2: name = \"Amina\"\n"
+            "  → Creates a variable called 'name' and stores the string \"Amina\" inside it.\n"
+            "  → Double quotes or single quotes both work for strings.\n\n"
+            "Line 3: age = 19\n"
+            "  → Creates an int variable called 'age'. No quotes around a number — quotes make it a string.\n\n"
+            "Line 4: gpa = 3.8\n"
+            "  → Creates a float variable. The decimal point is what makes it a float instead of an int.\n\n"
+            "Line 5: is_student = True\n"
+            "  → A bool variable. Note the capital T in True. Lowercase 'true' would cause a NameError.\n\n"
+            "Line 8: print(name)\n"
+            "  → The print() function displays the value stored in 'name' to the screen.\n\n"
+            "Lines 12–14: print(type(...))\n"
+            "  → type() is a built-in function that returns the class/type of any value.\n"
+            "  → The output <class 'str'> confirms it is a string.\n\n"
+            "Line 17: age = 20\n"
+            "  → Reassigns the variable. The old value 19 is gone. age is now 20.\n\n"
+            "Line 21: x, y, z = 1, 2, 3\n"
+            "  → Python allows assigning multiple variables on one line using commas (tuple unpacking).\n"
+            "  → This is shorthand for: x=1, then y=2, then z=3."
         ),
         "key_points": json.dumps([
-            "A variable stores a value using the = sign.",
-            "Python automatically detects the data type.",
-            "The four basic types are int, float, str, and bool.",
-            "Variable names are case-sensitive: 'Age' and 'age' are different.",
-            "Use print() to display a variable's value.",
+            "A variable stores a value using the = (assignment) operator.",
+            "Python detects the data type automatically — you don't declare it.",
+            "The four core types are: int (whole number), float (decimal), str (text), bool (True/False).",
+            "Variable names are case-sensitive: 'Name' and 'name' are different variables.",
+            "Names must start with a letter or underscore, never a digit.",
+            "Use type() to check what data type a variable holds.",
+            "You can reassign a variable at any time — the old value is replaced.",
+            "Always put text (strings) in quotes; numbers and booleans do NOT use quotes.",
         ]),
     },
+
     {
         "id": "L02",
         "title": "Operators",
         "order_index": 2,
+        "difficulty": "beginner",
         "explanation": (
-            "Operators are symbols that perform actions on values. Python has several types:\n"
-            "  • Arithmetic: + - * / // % **\n"
-            "  • Comparison: == != > < >= <=  (return True or False)\n"
-            "  • Logical: and, or, not\n"
-            "  • Assignment: =, +=, -=, *="
+            "WHAT ARE OPERATORS?\n"
+            "Operators are special symbols that tell Python to perform a specific action on "
+            "one or more values (called operands). Python has five main categories of operators "
+            "that beginners need to know. [Source: T1 Ch.2, O1, O3]\n\n"
+            "1. ARITHMETIC OPERATORS — for maths:\n"
+            "  +   Addition          → 5 + 3  = 8\n"
+            "  -   Subtraction       → 5 - 3  = 2\n"
+            "  *   Multiplication    → 5 * 3  = 15\n"
+            "  /   Division          → 5 / 2  = 2.5  (always gives a float)\n"
+            "  //  Floor Division    → 5 // 2 = 2    (drops the decimal, rounds DOWN)\n"
+            "  %   Modulus           → 5 % 2  = 1    (the REMAINDER after division)\n"
+            "  **  Exponentiation    → 2 ** 3 = 8    (2 to the power of 3)\n\n"
+            "2. COMPARISON OPERATORS — compare two values; always return True or False:\n"
+            "  ==  Equal to          → 5 == 5 is True\n"
+            "  !=  Not equal to      → 5 != 3 is True\n"
+            "  >   Greater than      → 5 > 3  is True\n"
+            "  <   Less than         → 5 < 3  is False\n"
+            "  >=  Greater or equal  → 5 >= 5 is True\n"
+            "  <=  Less or equal     → 3 <= 5 is True\n\n"
+            "3. LOGICAL OPERATORS — combine conditions:\n"
+            "  and → True only if BOTH sides are True\n"
+            "  or  → True if AT LEAST ONE side is True\n"
+            "  not → Reverses the boolean value (not True = False)\n\n"
+            "4. ASSIGNMENT OPERATORS — store or update values:\n"
+            "  =   Assign            → x = 5\n"
+            "  +=  Add and assign    → x += 3  is shorthand for  x = x + 3\n"
+            "  -=  Subtract & assign → x -= 2  is shorthand for  x = x - 2\n"
+            "  *=  Multiply & assign → x *= 4  is shorthand for  x = x * 4\n\n"
+            "COMMON BEGINNER MISTAKE: [Source: E4 — Altadmri & Brown, 2015]\n"
+            "Using = (assignment) when you mean == (comparison) inside a condition. "
+            "Remember: = stores a value; == checks if two values are equal."
         ),
         "analogy": (
             "Operators are like the buttons on a calculator. "
-            "Just as + adds numbers on a calculator, Python's + adds values in your program."
+            "Just as pressing + on a calculator adds two numbers, "
+            "Python's + operator adds two values in your program. "
+            "Comparison operators are like a referee in a sports match — "
+            "they look at both teams (values) and announce a verdict: True or False. "
+            "Logical operators (and, or) are like combining rules: "
+            "'You can enter the exam hall IF you have your student ID AND your exam form.' [R2]"
         ),
         "code_example": (
-            "# Arithmetic\n"
+            "# ── Arithmetic operators ──────────────────────────────────────\n"
             "x = 10\n"
             "y = 3\n"
-            "print(x + y)    # 13\n"
-            "print(x - y)    # 7\n"
-            "print(x * y)    # 30\n"
-            "print(x / y)    # 3.333...\n"
-            "print(x // y)   # 3  (floor division)\n"
-            "print(x % y)    # 1  (remainder)\n"
-            "print(x ** y)   # 1000 (10 to the power 3)\n\n"
-            "# Comparison\n"
-            "print(x > y)    # True\n"
-            "print(x == y)   # False\n\n"
-            "# Logical\n"
-            "print(x > 5 and y < 5)  # True"
+            "print(x + y)     # 13  — addition\n"
+            "print(x - y)     # 7   — subtraction\n"
+            "print(x * y)     # 30  — multiplication\n"
+            "print(x / y)     # 3.3333... — true division (always float)\n"
+            "print(x // y)    # 3   — floor division (drops decimal)\n"
+            "print(x % y)     # 1   — modulus (remainder: 10 = 3×3 + 1)\n"
+            "print(x ** y)    # 1000 — exponent (10 to the power of 3)\n\n"
+            "# ── Comparison operators (return True or False) ───────────────\n"
+            "print(x > y)     # True   — 10 is greater than 3\n"
+            "print(x == y)    # False  — 10 is not equal to 3\n"
+            "print(x != y)    # True   — 10 is not equal to 3\n"
+            "print(x >= 10)   # True   — 10 is greater than or equal to 10\n\n"
+            "# ── Logical operators ─────────────────────────────────────────\n"
+            "print(x > 5 and y < 5)   # True  — both are true\n"
+            "print(x > 5 and y > 5)   # False — second is false\n"
+            "print(x > 5 or  y > 5)   # True  — first is true\n"
+            "print(not x > 5)          # False — reverses True to False\n\n"
+            "# ── Assignment operators ──────────────────────────────────────\n"
+            "score = 50\n"
+            "score += 10      # same as: score = score + 10  →  score is now 60\n"
+            "score -= 5       # same as: score = score - 5   →  score is now 55\n"
+            "print(score)     # 55"
         ),
         "code_breakdown": (
-            "// is floor division — divides and drops the decimal part.\n"
-            "% is the modulus — gives the remainder after division.\n"
-            "** is exponentiation — raises a number to a power.\n"
-            "== checks equality (two equals signs); = is assignment (one equals sign).\n"
-            "'and' returns True only if BOTH conditions are True."
+            "Lines 2–3: x = 10, y = 3\n"
+            "  → Two int variables for the examples below.\n\n"
+            "Line 6: print(x / y)  →  3.3333...\n"
+            "  → The / operator ALWAYS returns a float, even if the result is a whole number.\n"
+            "  → e.g. 4 / 2 returns 2.0, not 2.\n\n"
+            "Line 7: print(x // y)  →  3\n"
+            "  → Floor division divides and then ROUNDS DOWN to the nearest whole number.\n"
+            "  → 10 / 3 = 3.333... → floor gives 3.\n\n"
+            "Line 8: print(x % y)  →  1\n"
+            "  → The modulus gives the REMAINDER after full division.\n"
+            "  → 10 = 3×3 + 1, so the remainder is 1.\n"
+            "  → Very useful: check if a number is even (n % 2 == 0) or odd (n % 2 == 1).\n\n"
+            "Line 9: print(x ** y)  →  1000\n"
+            "  → ** means 'to the power of'. 10**3 = 10 × 10 × 10 = 1000.\n\n"
+            "Line 12: print(x > y)  →  True\n"
+            "  → Comparison operators always produce a bool (True or False).\n\n"
+            "Line 17: print(x > 5 and y < 5)  →  True\n"
+            "  → 'and' requires BOTH conditions to be True. 10>5 is True AND 3<5 is True → True.\n\n"
+            "Line 23: score += 10\n"
+            "  → Shorthand for score = score + 10. Very common in loops to count up or down."
         ),
         "key_points": json.dumps([
-            "Use + - * / for basic arithmetic.",
-            "// gives the whole-number part of division; % gives the remainder.",
-            "Comparison operators return True or False.",
-            "Use == to compare, not = (which assigns a value).",
-            "'and', 'or', 'not' are logical operators for combining conditions.",
+            "Arithmetic operators: + - * / // % ** perform mathematical calculations.",
+            "/ (true division) always returns a float. // (floor division) returns an int.",
+            "% (modulus) gives the REMAINDER after division — useful for checking even/odd.",
+            "Comparison operators (==, !=, >, <, >=, <=) always return True or False.",
+            "CRITICAL: = is assignment (stores a value); == is comparison (checks equality).",
+            "Logical operators: 'and' needs both True; 'or' needs at least one True; 'not' reverses.",
+            "Shorthand operators (+=, -=, *=) update a variable without rewriting its name.",
+            "Operator precedence follows BODMAS/PEMDAS — use parentheses () to control order.",
         ]),
     },
+
     {
         "id": "L03",
-        "title": "Conditionals (if/else)",
+        "title": "Basic I/O (input / print)",
         "order_index": 3,
+        "difficulty": "beginner",
         "explanation": (
-            "Conditionals let your program make decisions. "
-            "If a condition is True, one block of code runs; otherwise a different block runs. "
-            "The keywords are: if, elif (else if), and else. "
-            "Python uses indentation (4 spaces) to mark which code belongs inside each block."
+            "WHAT IS I/O?\n"
+            "I/O stands for Input and Output — the two ways your program communicates with the user. "
+            "Without I/O, a program works in silence and nobody can interact with it. [Source: T1 Ch.1, O2]\n\n"
+            "OUTPUT — print():\n"
+            "The print() function displays text, numbers, or variable values on the screen. "
+            "It is the most-used function in Python and the first thing every beginner learns.\n"
+            "  • You can pass multiple values separated by commas — print() adds a space between them.\n"
+            "  • You can customise the separator with the sep parameter: print('a','b', sep='-') → a-b\n"
+            "  • By default print() adds a new line at the end. Use end='' to prevent this.\n\n"
+            "F-STRINGS (Formatted Strings): [Source: T1 Ch.2, O1]\n"
+            "The modern way to embed variable values directly inside a string is to use an f-string. "
+            "Place the letter f before the opening quote, then put variable names inside curly braces {}.\n"
+            "  Example: name = 'Amina'  →  print(f'Hello, {name}!')  →  Hello, Amina!\n\n"
+            "INPUT — input():\n"
+            "The input() function pauses the program and waits for the user to type something "
+            "and press Enter. Whatever the user types is returned as a string.\n\n"
+            "CRITICAL RULE — input() ALWAYS returns a string (str): [Source: E1 — Farah et al., 2023]\n"
+            "This is one of the most common beginner mistakes. If a user types '25', Python stores "
+            "the two-character string '25', NOT the number 25. "
+            "To use it as a number you MUST convert it:\n"
+            "  int(input(...))   — converts to whole number\n"
+            "  float(input(...)) — converts to decimal number\n"
+            "Skipping this conversion and then doing arithmetic will cause a TypeError."
         ),
         "analogy": (
-            "Think of a conditional like a traffic light. "
-            "If the light is green, you go. If it's red, you stop. "
-            "Your program does the same — checks a condition and picks a path."
+            "Think of print() as your program's mouth — it speaks to the user by displaying text on screen. "
+            "Think of input() as your program's ears — it listens to what the user types "
+            "and remembers it as a string. "
+            "The key rule to remember: your program's ears only understand text. "
+            "If someone says the number 'twenty-five', you still hear it as a word, not a number. "
+            "You have to translate (convert) it yourself before you can do maths with it. [R2]"
         ),
         "code_example": (
-            "score = 75\n\n"
-            "if score >= 70:\n"
-            "    print(\"Topic mastered!\")\n"
-            "elif score >= 50:\n"
-            "    print(\"Good effort. Keep practicing.\")\n"
-            "else:\n"
-            "    print(\"Review the lesson and try again.\")"
+            "# ── Basic output with print() ─────────────────────────────────\n"
+            "print(\"Welcome to Python Tutor!\")         # plain text\n"
+            "print(\"The answer is:\", 42)               # multiple args, auto-space\n"
+            "print(\"Line 1\", end=\" \")                  # no newline at end\n"
+            "print(\"still on same line\")               # joins to previous\n\n"
+            "# ── F-strings (modern variable formatting) ────────────────────\n"
+            "name  = \"Amina\"\n"
+            "score = 87\n"
+            "print(f\"Hello, {name}!\")                  # Hello, Amina!\n"
+            "print(f\"{name} scored {score}/100.\")      # Amina scored 87/100.\n"
+            "print(f\"Double score: {score * 2}\")       # expression inside {}\n\n"
+            "# ── Basic input() ─────────────────────────────────────────────\n"
+            "user_name = input(\"What is your name? \")  # waits for user to type\n"
+            "print(f\"Nice to meet you, {user_name}!\")\n\n"
+            "# ── Converting input to a number ──────────────────────────────\n"
+            "age_str = input(\"Enter your age: \")        # returns a str, e.g. '19'\n"
+            "age     = int(age_str)                      # convert '19' → 19 (int)\n"
+            "print(f\"Next year you will be {age + 1}.\") # now arithmetic works\n\n"
+            "# ── Shorter form: convert on the same line ────────────────────\n"
+            "height = float(input(\"Enter your height in cm: \"))\n"
+            "print(f\"Your height is {height} cm.\")"
         ),
         "code_breakdown": (
-            "Line 3: 'if score >= 70:' — checks if score is 70 or above.\n"
-            "Line 4: indented code runs ONLY if the condition above is True.\n"
-            "Line 5: 'elif' means 'else if' — checked only if the first 'if' was False.\n"
-            "Line 7: 'else' catches everything that didn't match above.\n"
-            "The colon (:) at the end of each if/elif/else line is required."
+            "Line 2: print(\"Welcome to Python Tutor!\")\n"
+            "  → Prints exactly the text inside the quotes.\n\n"
+            "Line 3: print(\"The answer is:\", 42)\n"
+            "  → Passing two arguments. print() joins them with a space: 'The answer is: 42'.\n\n"
+            "Lines 4–5: print(\"Line 1\", end=\" \") then print(\"still on same line\")\n"
+            "  → By default print() ends with a newline ('\\n'). Setting end=\" \" replaces it with a space,\n"
+            "    so the next print() continues on the SAME line.\n\n"
+            "Line 9: print(f\"Hello, {name}!\")\n"
+            "  → The 'f' prefix turns this into an f-string.\n"
+            "  → {name} is a placeholder — Python replaces it with the current value of 'name'.\n\n"
+            "Line 11: print(f\"Double score: {score * 2}\")\n"
+            "  → You can place any Python expression inside {} in an f-string, not just variable names.\n\n"
+            "Line 14: user_name = input(\"What is your name? \")\n"
+            "  → The string inside input() is the 'prompt' — it is shown to the user before they type.\n"
+            "  → Whatever the user types is stored as a str in user_name.\n\n"
+            "Lines 17–19: age_str = input(...) then age = int(age_str)\n"
+            "  → input() returns '19' (a str). int('19') converts it to the integer 19.\n"
+            "  → Without int(), doing age + 1 would cause TypeError: can only concatenate str (not 'int') to str.\n\n"
+            "Line 22: float(input(...))\n"
+            "  → A shortcut: wrap input() directly inside float() on the same line.\n"
+            "  → Use int() for whole numbers, float() for decimals."
         ),
         "key_points": json.dumps([
-            "Use 'if' to check a condition.",
-            "Use 'elif' for additional conditions.",
-            "Use 'else' as the default when no condition matches.",
-            "Always end if/elif/else lines with a colon (:).",
-            "Indentation (4 spaces) defines which code belongs inside a block.",
-        ]),
-    },
-    {
-        "id": "L04",
-        "title": "Loops (for / while)",
-        "order_index": 4,
-        "explanation": (
-            "Loops repeat a block of code multiple times. Python has two types:\n"
-            "  • for loop — repeats a fixed number of times over a sequence.\n"
-            "  • while loop — repeats as long as a condition stays True.\n"
-            "Use range(n) to loop exactly n times. "
-            "break exits a loop early; continue skips to the next iteration."
-        ),
-        "analogy": (
-            "A loop is like a morning routine. "
-            "You repeat the same steps (wake up, brush teeth, eat) every day "
-            "until the week ends (for loop) or until you're on holiday (while loop)."
-        ),
-        "code_example": (
-            "# for loop — print numbers 0 to 4\n"
-            "for i in range(5):\n"
-            "    print(i)\n\n"
-            "# for loop over a list\n"
-            "fruits = [\"apple\", \"banana\", \"cherry\"]\n"
-            "for fruit in fruits:\n"
-            "    print(fruit)\n\n"
-            "# while loop\n"
-            "count = 0\n"
-            "while count < 3:\n"
-            "    print(\"count is\", count)\n"
-            "    count += 1   # important: avoid infinite loop!"
-        ),
-        "code_breakdown": (
-            "range(5) generates numbers 0, 1, 2, 3, 4 — it stops BEFORE 5.\n"
-            "'for fruit in fruits' assigns each list item to 'fruit' one at a time.\n"
-            "'while count < 3' keeps looping as long as count is less than 3.\n"
-            "'count += 1' increases count by 1 each time — without this the loop never ends."
-        ),
-        "key_points": json.dumps([
-            "A 'for' loop repeats over a sequence or range.",
-            "range(5) gives numbers 0 to 4 (not including 5).",
-            "A 'while' loop runs as long as its condition is True.",
-            "Always update the loop variable in a while loop to avoid infinite loops.",
-            "'break' exits a loop; 'continue' skips to the next iteration.",
-        ]),
-    },
-    {
-        "id": "L05",
-        "title": "Functions",
-        "order_index": 5,
-        "explanation": (
-            "A function is a reusable block of code that performs a specific task. "
-            "You define it once with 'def' and call it by name as many times as needed. "
-            "Functions can accept inputs (parameters) and return outputs (return value). "
-            "This avoids repeating the same code and makes programs easier to read."
-        ),
-        "analogy": (
-            "A function is like a recipe. You write the recipe once, "
-            "and anyone can follow it whenever they need that dish. "
-            "The ingredients are the parameters; the finished dish is the return value."
-        ),
-        "code_example": (
-            "# Defining a function\n"
-            "def greet(name):\n"
-            "    message = \"Hello, \" + name + \"!\"\n"
-            "    return message\n\n"
-            "# Calling the function\n"
-            "result = greet(\"Amina\")\n"
-            "print(result)   # Output: Hello, Amina!\n\n"
-            "# Function with default parameter\n"
-            "def add(a, b=0):\n"
-            "    return a + b\n\n"
-            "print(add(5, 3))   # 8\n"
-            "print(add(5))      # 5  (b defaults to 0)"
-        ),
-        "code_breakdown": (
-            "Line 2: 'def greet(name):' — defines a function called 'greet' that takes one input.\n"
-            "Line 4: 'return message' — sends the result back to the caller.\n"
-            "Line 7: 'greet(\"Amina\")' — calls the function, passing \"Amina\" as the argument.\n"
-            "Line 11: 'b=0' is a default parameter — used when no value is provided for b."
-        ),
-        "key_points": json.dumps([
-            "Define a function with 'def function_name(parameters):'.",
-            "Call a function by writing its name followed by parentheses.",
-            "Parameters are inputs; 'return' sends a value back.",
-            "Functions can have default parameter values.",
-            "A function without 'return' returns None automatically.",
+            "print() displays output to the screen — it is the most-used function in Python.",
+            "Separate multiple print() arguments with commas — Python adds a space between them.",
+            "f-strings (f'Hello {name}') are the modern, readable way to embed variables in text.",
+            "You can use any Python expression inside the {} of an f-string.",
+            "input() pauses the program and waits for the user to type something.",
+            "CRITICAL: input() ALWAYS returns a string (str), even if the user types a number.",
+            "Convert input to a number using int() for whole numbers or float() for decimals.",
+            "Forgetting to convert input before arithmetic is one of the most common beginner bugs.",
         ]),
     },
 ]
 
-# ─────────────────────────────────────────────
-# PRACTICE QUESTIONS  (L01–L05, 5 each)
-# ─────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────────────
+# PRACTICE QUESTIONS  — Amateur Tier (5 per lesson, 15 total)
+# Sources: R1 (researcher-authored), E1, E4 (error pattern literature)
+# ─────────────────────────────────────────────────────────────────────────────
 QUESTIONS_BATCH_1 = [
-    # L01 — Variables & Data Types
+    # ── L01 — Variables & Data Types ─────────────────────────────────────────
     {
         "topic_id": "L01",
         "question_text": "What is the data type of the value in: x = 3.14?",
@@ -253,69 +350,78 @@ QUESTIONS_BATCH_1 = [
         "option_c": "str",  "option_d": "bool",
         "correct_option": "B",
         "hint_1": "Think about whether 3.14 is a whole number or a decimal number.",
-        "hint_2": "In Python, numbers with a decimal point are called 'float' (floating point).",
-        "hint_3": "3.14 has a decimal point, so its type is 'float'. The answer is B.",
+        "hint_2": "In Python, numbers WITH a decimal point are called 'float' (floating-point numbers).",
+        "hint_3": "3.14 has a decimal point, so its type is float. The answer is B.",
     },
     {
         "topic_id": "L01",
-        "question_text": "Which of the following creates a variable that stores the text 'Python'?",
-        "option_a": "x = Python", "option_b": "x = 'Python'",
-        "option_c": "x == 'Python'", "option_d": "str = Python",
+        "question_text": "Which of the following correctly creates a variable that stores the text 'Python'?",
+        "option_a": "x = Python",
+        "option_b": "x = 'Python'",
+        "option_c": "x == 'Python'",
+        "option_d": "str = Python",
         "correct_option": "B",
         "hint_1": "Text (strings) must be wrapped in quotes in Python.",
-        "hint_2": "Single quotes or double quotes both work for strings. Look for quotes around Python.",
-        "hint_3": "B is correct: x = 'Python'. Without quotes, Python thinks 'Python' is a variable name, not text.",
+        "hint_2": "Single quotes or double quotes both work for strings. Look for quotes around the word Python.",
+        "hint_3": "B is correct: x = 'Python'. Without quotes, Python thinks 'Python' is a variable name, not text. [E4]",
     },
     {
         "topic_id": "L01",
-        "question_text": "What does the print(type(x)) function return if x = 10?",
-        "option_a": "float", "option_b": "str",
-        "option_c": "<class 'int'>", "option_d": "True",
+        "question_text": "What does print(type(x)) display if x = 10?",
+        "option_a": "float",
+        "option_b": "str",
+        "option_c": "<class 'int'>",
+        "option_d": "True",
         "correct_option": "C",
-        "hint_1": "10 is a whole number. Which type represents whole numbers?",
-        "hint_2": "type() returns the class of the value. For whole numbers it returns 'int'.",
-        "hint_3": "The answer is C: <class 'int'>. The type() function always returns the class name.",
+        "hint_1": "10 is a whole number — no decimal point. Which type represents whole numbers?",
+        "hint_2": "type() returns the full class name of the value. For whole numbers Python reports 'int'.",
+        "hint_3": "C is correct: <class 'int'>. The type() function always returns the class name in angle brackets.",
     },
     {
         "topic_id": "L01",
         "question_text": "Which of the following is a valid Python variable name?",
-        "option_a": "2score", "option_b": "my-score",
-        "option_c": "my_score", "option_d": "my score",
+        "option_a": "2score",
+        "option_b": "my-score",
+        "option_c": "my_score",
+        "option_d": "my score",
         "correct_option": "C",
-        "hint_1": "Variable names cannot start with a number or contain spaces or hyphens.",
+        "hint_1": "Variable names cannot start with a digit, and cannot contain spaces or hyphens.",
         "hint_2": "Python variable names can only use letters, digits, and underscores (_).",
-        "hint_3": "C is correct: my_score. Underscores are allowed; spaces, hyphens, and leading digits are not.",
+        "hint_3": "C is correct: my_score. Underscores are allowed. Spaces, hyphens, and leading digits are not. [O5]",
     },
     {
         "topic_id": "L01",
-        "question_text": "What value does a bool variable hold?",
-        "option_a": "Numbers only", "option_b": "Text only",
-        "option_c": "True or False", "option_d": "Any value",
+        "question_text": "What are the only two possible values a bool variable can hold?",
+        "option_a": "0 and 1",
+        "option_b": "yes and no",
+        "option_c": "True or False",
+        "option_d": "on and off",
         "correct_option": "C",
-        "hint_1": "Think about the word 'boolean' — it refers to logic.",
-        "hint_2": "Boolean types have only two possible states, like an on/off switch.",
-        "hint_3": "C is correct: True or False. These are the only two values a bool can hold.",
+        "hint_1": "Think about the word 'boolean' — it comes from binary logic with exactly two states.",
+        "hint_2": "In Python, the two boolean values are capitalised. Lowercase 'true' would be a NameError.",
+        "hint_3": "C is correct: True or False. These are the only two values a bool can hold. Capital letters are required.",
     },
-    # L02 — Operators
+
+    # ── L02 — Operators ───────────────────────────────────────────────────────
     {
         "topic_id": "L02",
         "question_text": "What is the result of 10 % 3 in Python?",
         "option_a": "3", "option_b": "0",
         "option_c": "1", "option_d": "3.33",
         "correct_option": "C",
-        "hint_1": "The % operator gives the remainder after division, not the quotient.",
-        "hint_2": "10 divided by 3 is 3 with a remainder of 1.",
-        "hint_3": "C is correct: 1. 10 = 3×3 + 1, so 10 % 3 = 1.",
+        "hint_1": "The % operator gives the REMAINDER after division, not the quotient.",
+        "hint_2": "10 divided by 3 is 3 remainder 1. That remainder is what % returns.",
+        "hint_3": "C is correct: 1. 10 = 3×3 + 1, so 10 % 3 = 1. [T1 Ch.2]",
     },
     {
         "topic_id": "L02",
-        "question_text": "Which operator checks if two values are equal?",
+        "question_text": "Which operator checks whether two values are EQUAL?",
         "option_a": "=", "option_b": "==",
         "option_c": "!=", "option_d": ">=",
         "correct_option": "B",
-        "hint_1": "One equals sign (=) assigns a value. Another symbol is used to compare.",
-        "hint_2": "Equality comparison uses two equals signs together.",
-        "hint_3": "B is correct: ==. A single = assigns; double == compares.",
+        "hint_1": "One equals sign (=) assigns a value to a variable. Another symbol is used for comparison.",
+        "hint_2": "Equality comparison uses TWO equals signs together: ==.",
+        "hint_3": "B is correct: ==. A single = assigns; double == compares. Mixing them up is the #1 beginner error. [E4]",
     },
     {
         "topic_id": "L02",
@@ -323,7 +429,7 @@ QUESTIONS_BATCH_1 = [
         "option_a": "6", "option_b": "5",
         "option_c": "9", "option_d": "8",
         "correct_option": "D",
-        "hint_1": "The ** operator means 'to the power of'.",
+        "hint_1": "The ** operator means 'to the power of' — it is Python's exponentiation operator.",
         "hint_2": "2 ** 3 means 2 raised to the power of 3, which is 2 × 2 × 2.",
         "hint_3": "D is correct: 8. 2³ = 2 × 2 × 2 = 8.",
     },
@@ -334,8 +440,8 @@ QUESTIONS_BATCH_1 = [
         "option_c": "None", "option_d": "Error",
         "correct_option": "B",
         "hint_1": "'and' requires BOTH sides to be True to return True.",
-        "hint_2": "Since one side is False, the whole expression is False.",
-        "hint_3": "B is correct: False. 'and' only returns True when both operands are True.",
+        "hint_2": "Since one side (False) is not True, the entire 'and' expression is False.",
+        "hint_3": "B is correct: False. 'and' only returns True when BOTH operands are True. [T1 Ch.5]",
     },
     {
         "topic_id": "L02",
@@ -343,181 +449,92 @@ QUESTIONS_BATCH_1 = [
         "option_a": "3.75", "option_b": "4",
         "option_c": "3", "option_d": "11",
         "correct_option": "C",
-        "hint_1": "// is floor division — it drops the decimal part of the result.",
-        "hint_2": "15 / 4 = 3.75. Floor division keeps only the whole number part.",
-        "hint_3": "C is correct: 3. Floor division discards the decimal, so 3.75 becomes 3.",
+        "hint_1": "// is floor division — it divides and then removes the decimal part, rounding DOWN.",
+        "hint_2": "15 / 4 = 3.75. Floor division keeps only the whole number part: 3.",
+        "hint_3": "C is correct: 3. Floor division discards the decimal, so 3.75 becomes 3. [O1]",
     },
-    # L03 — Conditionals
+
+    # ── L03 — Basic I/O ───────────────────────────────────────────────────────
     {
         "topic_id": "L03",
-        "question_text": "What keyword is used to check an additional condition if the first 'if' is False?",
-        "option_a": "else", "option_b": "then",
-        "option_c": "elif", "option_d": "ifelse",
+        "question_text": "What data type does input() ALWAYS return?",
+        "option_a": "int",
+        "option_b": "float",
+        "option_c": "str",
+        "option_d": "It depends on what the user types",
         "correct_option": "C",
-        "hint_1": "Python uses a shortened form of 'else if'.",
-        "hint_2": "It's a combination of 'else' and 'if' merged together.",
-        "hint_3": "C is correct: elif. It means 'else if' and is checked only when the previous condition was False.",
+        "hint_1": "Even if the user types a number like 25, input() still wraps it in a specific type.",
+        "hint_2": "input() always treats what the user typed as text, regardless of what they typed.",
+        "hint_3": "C is correct: str. input() ALWAYS returns a string. Convert with int() or float() to use it as a number. [E1]",
     },
     {
         "topic_id": "L03",
-        "question_text": "What is required at the end of an 'if' statement line?",
-        "option_a": "Semicolon (;)", "option_b": "Colon (:)",
-        "option_c": "Brackets ({})", "option_d": "Nothing",
+        "question_text": "Which of the following correctly uses an f-string to display a variable?",
+        "option_a": "print('Hello ' + {name})",
+        "option_b": "print(f'Hello {name}')",
+        "option_c": "print('Hello', {name})",
+        "option_d": "print(Hello name)",
         "correct_option": "B",
-        "hint_1": "Python uses a specific punctuation mark to signal the start of a code block.",
-        "hint_2": "Unlike Java or C, Python doesn't use curly braces — it uses a different character.",
-        "hint_3": "B is correct: a colon (:). Every if, elif, else, for, while, and def line ends with ':'.",
+        "hint_1": "f-strings start with the letter f placed directly before the opening quote.",
+        "hint_2": "Variable names are embedded inside curly braces {} within the f-string.",
+        "hint_3": "B is correct: print(f'Hello {name}'). The 'f' prefix enables variable embedding with {}.",
     },
     {
         "topic_id": "L03",
-        "question_text": "What will print? x = 5\nif x > 10:\n    print('A')\nelse:\n    print('B')",
-        "option_a": "A", "option_b": "Nothing",
-        "option_c": "B", "option_d": "Error",
+        "question_text": "What happens when you run: age = input('Enter age: ') then print(age + 1)?",
+        "option_a": "It prints the age plus 1 correctly",
+        "option_b": "It causes a TypeError",
+        "option_c": "It prints 'age1'",
+        "option_d": "It prints 0",
+        "correct_option": "B",
+        "hint_1": "Remember what type input() always returns.",
+        "hint_2": "You cannot add a string and an integer directly in Python — the types must match.",
+        "hint_3": "B is correct: TypeError. age is a str (e.g. '19') and you can't add str + int. Fix: age = int(input('Enter age: ')). [E1]",
+    },
+    {
+        "topic_id": "L03",
+        "question_text": "What does print('A', 'B', 'C') output?",
+        "option_a": "ABC",
+        "option_b": "A,B,C",
+        "option_c": "A B C",
+        "option_d": "Error",
         "correct_option": "C",
-        "hint_1": "Check whether 5 > 10 is True or False.",
-        "hint_2": "5 is NOT greater than 10, so the 'if' block is skipped.",
-        "hint_3": "C is correct: B. Since 5 > 10 is False, the 'else' block runs and prints 'B'.",
+        "hint_1": "print() accepts multiple arguments separated by commas.",
+        "hint_2": "By default, print() places a space between each argument it receives.",
+        "hint_3": "C is correct: A B C. print() uses a space as the default separator. Use sep='' to remove it.",
     },
     {
         "topic_id": "L03",
-        "question_text": "How does Python know which code belongs inside an 'if' block?",
-        "option_a": "Curly braces {}", "option_b": "Parentheses ()",
-        "option_c": "Indentation (spaces)", "option_d": "END keyword",
-        "correct_option": "C",
-        "hint_1": "Python doesn't use braces like other languages.",
-        "hint_2": "The code inside a block is shifted to the right using spaces.",
-        "hint_3": "C is correct: Indentation. Python uses 4 spaces to group code inside blocks.",
-    },
-    {
-        "topic_id": "L03",
-        "question_text": "Which block runs when none of the 'if' or 'elif' conditions are True?",
-        "option_a": "elif", "option_b": "default",
-        "option_c": "finally", "option_d": "else",
+        "question_text": "Which function is used to display output on the screen in Python?",
+        "option_a": "input()",
+        "option_b": "display()",
+        "option_c": "show()",
+        "option_d": "print()",
         "correct_option": "D",
-        "hint_1": "This block is the fallback — it runs when everything else fails.",
-        "hint_2": "It doesn't have a condition — it catches all remaining cases.",
-        "hint_3": "D is correct: else. It runs when no 'if' or 'elif' condition was True.",
-    },
-    # L04 — Loops
-    {
-        "topic_id": "L04",
-        "question_text": "How many times does this loop run? for i in range(4): print(i)",
-        "option_a": "3", "option_b": "4",
-        "option_c": "5", "option_d": "0",
-        "correct_option": "B",
-        "hint_1": "range(4) generates a sequence of numbers — count how many.",
-        "hint_2": "range(4) produces: 0, 1, 2, 3 — count those values.",
-        "hint_3": "B is correct: 4. range(4) gives 0, 1, 2, 3 — four values, four iterations.",
-    },
-    {
-        "topic_id": "L04",
-        "question_text": "What happens if you forget to increment the counter in a while loop?",
-        "option_a": "The loop stops after one run", "option_b": "Python throws an error",
-        "option_c": "The loop runs forever (infinite loop)", "option_d": "The counter resets to 0",
-        "correct_option": "C",
-        "hint_1": "Think about what the condition checks and whether it can ever become False.",
-        "hint_2": "If the variable never changes, the condition stays True permanently.",
-        "hint_3": "C is correct: infinite loop. Without incrementing, the while condition never becomes False.",
-    },
-    {
-        "topic_id": "L04",
-        "question_text": "What does 'break' do inside a loop?",
-        "option_a": "Skips the current iteration", "option_b": "Exits the loop immediately",
-        "option_c": "Restarts the loop", "option_d": "Pauses the loop",
-        "correct_option": "B",
-        "hint_1": "The word 'break' means to stop something.",
-        "hint_2": "It terminates the loop entirely, not just one iteration.",
-        "hint_3": "B is correct: exits the loop immediately. Execution continues after the loop block.",
-    },
-    {
-        "topic_id": "L04",
-        "question_text": "What does range(2, 6) produce?",
-        "option_a": "2, 3, 4, 5, 6", "option_b": "2, 3, 4, 5",
-        "option_c": "1, 2, 3, 4, 5", "option_d": "2, 4, 6",
-        "correct_option": "B",
-        "hint_1": "range(start, stop) starts at the first number and stops BEFORE the second.",
-        "hint_2": "It includes 2 but excludes 6.",
-        "hint_3": "B is correct: 2, 3, 4, 5. range(2, 6) starts at 2 and stops before 6.",
-    },
-    {
-        "topic_id": "L04",
-        "question_text": "Which loop is best when you don't know in advance how many times to repeat?",
-        "option_a": "for loop", "option_b": "while loop",
-        "option_c": "range loop", "option_d": "if loop",
-        "correct_option": "B",
-        "hint_1": "One type of loop runs a set number of times; another runs until a condition changes.",
-        "hint_2": "When the number of repetitions depends on user input or an event, which loop fits?",
-        "hint_3": "B is correct: while loop. Use it when you don't know how many iterations are needed upfront.",
-    },
-    # L05 — Functions
-    {
-        "topic_id": "L05",
-        "question_text": "What keyword is used to define a function in Python?",
-        "option_a": "function", "option_b": "define",
-        "option_c": "def", "option_d": "fun",
-        "correct_option": "C",
-        "hint_1": "It's an abbreviation of the word 'define'.",
-        "hint_2": "It's three letters long and starts with 'd'.",
-        "hint_3": "C is correct: def. You write 'def function_name():' to create a function.",
-    },
-    {
-        "topic_id": "L05",
-        "question_text": "What does the 'return' keyword do in a function?",
-        "option_a": "Prints the result to the screen",
-        "option_b": "Sends a value back to the caller",
-        "option_c": "Stops the program",
-        "option_d": "Repeats the function",
-        "correct_option": "B",
-        "hint_1": "Think about what happens after a function finishes its work.",
-        "hint_2": "The value doesn't automatically appear on screen — it's sent somewhere.",
-        "hint_3": "B is correct: sends a value back to the caller. You can then store or print that value.",
-    },
-    {
-        "topic_id": "L05",
-        "question_text": "What is a parameter in a function?",
-        "option_a": "The name of the function",
-        "option_b": "An input value the function receives",
-        "option_c": "The value the function returns",
-        "option_d": "A comment inside the function",
-        "correct_option": "B",
-        "hint_1": "Parameters allow you to pass information into a function.",
-        "hint_2": "They appear inside the parentheses in the 'def' line.",
-        "hint_3": "B is correct: an input value. Parameters are listed in parentheses when defining the function.",
-    },
-    {
-        "topic_id": "L05",
-        "question_text": "What does a function return if it has no 'return' statement?",
-        "option_a": "0", "option_b": "False",
-        "option_c": "None", "option_d": "An error",
-        "correct_option": "C",
-        "hint_1": "Python always returns something from a function, even if you don't specify.",
-        "hint_2": "The default return value in Python represents 'nothing'.",
-        "hint_3": "C is correct: None. Python implicitly returns None when there's no return statement.",
-    },
-    {
-        "topic_id": "L05",
-        "question_text": "Which line correctly calls a function named 'greet' with 'Amina' as the argument?",
-        "option_a": "def greet('Amina')", "option_b": "call greet('Amina')",
-        "option_c": "greet('Amina')", "option_d": "greet = 'Amina'",
-        "correct_option": "C",
-        "hint_1": "You call a function by using its name followed by parentheses.",
-        "hint_2": "'def' is for defining, not calling. Look for just the function name.",
-        "hint_3": "C is correct: greet('Amina'). To call a function, write its name with arguments in parentheses.",
+        "hint_1": "You have already seen this function used in every example in the lesson.",
+        "hint_2": "It is the most basic output function in Python and starts with the letter 'p'.",
+        "hint_3": "D is correct: print(). It is Python's built-in function for displaying values on the screen. [T1 Ch.1]",
     },
 ]
 
 
 def seed_lessons_batch1():
-    """Seed lessons L01–L05 and their practice questions."""
+    """Seed Amateur-tier lessons (L01–L03) and their practice questions."""
     with app.app_context():
         seeded = 0
         for data in LESSONS:
-            if not db.session.get(Lesson, data["id"]):
+            existing = db.session.get(Lesson, data["id"])
+            if existing:
+                # Update existing record with new detailed content
+                for key, value in data.items():
+                    setattr(existing, key, value)
+                seeded += 1
+            else:
                 lesson = Lesson(**data)
                 db.session.add(lesson)
                 seeded += 1
         db.session.commit()
-        print(f"[OK] Seeded {seeded} lessons (L01-L05).")
+        print(f"[OK] Seeded/updated {seeded} Amateur-tier lessons (L01-L03).")
 
         q_seeded = 0
         for q in QUESTIONS_BATCH_1:
@@ -528,7 +545,7 @@ def seed_lessons_batch1():
                 db.session.add(PracticeQuestion(**q))
                 q_seeded += 1
         db.session.commit()
-        print(f"[OK] Seeded {q_seeded} practice questions (L01-L05).")
+        print(f"[OK] Seeded {q_seeded} practice questions (L01-L03).")
 
 
 if __name__ == "__main__":

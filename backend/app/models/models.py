@@ -58,6 +58,7 @@ class Lesson(db.Model):
         return {
             "id": self.id,
             "title": self.title,
+            "description": self.explanation[:120] + "..." if self.explanation and len(self.explanation) > 120 else (self.explanation or ""),
             "order_index": self.order_index,
             "difficulty": self.difficulty,
             "status": status or "not_started",

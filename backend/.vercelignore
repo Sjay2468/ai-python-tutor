@@ -1,0 +1,12 @@
+# Ignore Python virtual environment
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+instance/
+*.db
+.env
+.env.development
+.env.local
+.env.production
+.env.staging

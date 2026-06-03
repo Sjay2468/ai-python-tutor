@@ -1,7 +1,7 @@
 /// Central place for all API endpoint constants.
 class ApiConstants {
   // Deployed production backend URL
-  static const String baseUrl = 'https://ai-python-tutor-l4j1eo42k-shelterugwa-7093s-projects.vercel.app/api/v1';
+  static const String baseUrl = 'https://ai-python-tutor-ten.vercel.app/api/v1';
 
   // Auth
   static const String register = '$baseUrl/auth/register';

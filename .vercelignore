@@ -1,0 +1,19 @@
+# Ignore Flutter mobile app source code as it's not needed for backend deployment
+mobile/
+
+# Ignore Python virtual environment
+backend/venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+backend/instance/
+*.db
+
+# Ignore development/IDE files
+.git/
+.github/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

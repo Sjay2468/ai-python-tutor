@@ -44,8 +44,9 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Perform login against the Flask backend
-  Future<bool> login(String email, String password) async {
+  /// Perform login against the Flask backend.
+  /// Returns null on success, or an error message string on failure.
+  Future<String?> login(String email, String password) async {
     final dio = Dio();
     try {
       final response = await dio.post(
@@ -55,16 +56,23 @@ class AuthService extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = response.data;
         await saveSession(data['token'], data['user']);
-        return true;
+        return null; // success
       }
+      return 'Login failed. Please try again.';
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.data is Map) {
+        return e.response!.data['error'] ?? 'Login failed. Please try again.';
+      }
+      return 'Could not connect to server. Please check your internet connection.';
     } catch (e) {
       debugPrint('Login error: $e');
+      return 'An unexpected error occurred. Please try again.';
     }
-    return false;
   }
 
-  /// Perform registration against the Flask backend
-  Future<bool> register(String fullName, String email, String password, String skillLevel) async {
+  /// Perform registration against the Flask backend.
+  /// Returns null on success, or an error message string on failure.
+  Future<String?> register(String fullName, String email, String password, String skillLevel) async {
     final dio = Dio();
     try {
       final response = await dio.post(
@@ -79,11 +87,17 @@ class AuthService extends ChangeNotifier {
       if (response.statusCode == 201) {
         final data = response.data;
         await saveSession(data['token'], data['user']);
-        return true;
+        return null; // success
       }
+      return 'Registration failed. Please try again.';
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.data is Map) {
+        return e.response!.data['error'] ?? 'Registration failed. Please try again.';
+      }
+      return 'Could not connect to server. Please check your internet connection.';
     } catch (e) {
       debugPrint('Registration error: $e');
+      return 'An unexpected error occurred. Please try again.';
     }
-    return false;
   }
 }

@@ -28,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _errorMessage = null;
     });
 
-    final success = await context.read<AuthService>().register(
+    final error = await context.read<AuthService>().register(
           _nameController.text.trim(),
           _emailController.text.trim(),
           _passwordController.text,
@@ -41,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = false;
     });
 
-    if (success) {
+    if (error == null) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const HomeScreen()),
@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     } else {
       setState(() {
-        _errorMessage = 'Registration failed. Email might be in use.';
+        _errorMessage = error;
       });
     }
   }

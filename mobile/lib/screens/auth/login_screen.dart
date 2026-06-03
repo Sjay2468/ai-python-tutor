@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
 
-    final success = await context.read<AuthService>().login(
+    final error = await context.read<AuthService>().login(
           _emailController.text.trim(),
           _passwordController.text,
         );
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = false;
     });
 
-    if (success) {
+    if (error == null) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const HomeScreen()),
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else {
       setState(() {
-        _errorMessage = 'Invalid email or password.';
+        _errorMessage = error;
       });
     }
   }

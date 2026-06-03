@@ -17,7 +17,17 @@ def create_app(config_object="config.Config"):
     db.init_app(app)
     jwt.init_app(app)
     bcrypt.init_app(app)
-    CORS(app)
+    CORS(
+        app,
+        origins=[
+            "https://ai-python-tutor-web.vercel.app",   # Flutter web (prod)
+            "http://localhost:*",                        # local Flutter/dev
+            "http://127.0.0.1:*",
+        ],
+        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    )
 
     # Import models so SQLAlchemy registers them (required before db.create_all)
     from app.models import User, Lesson, PracticeQuestion, UserProgress, ChatLog  # noqa: F401

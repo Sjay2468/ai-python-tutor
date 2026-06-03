@@ -12,6 +12,7 @@ class Config:
         db_url = db_url.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = db_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')   # legacy name, unused
+    GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')   # Gemini AI — required for AI Mentor
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=7)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)

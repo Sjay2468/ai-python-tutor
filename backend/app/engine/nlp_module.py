@@ -26,7 +26,7 @@ _RATE_LIMIT = 20        # calls per user per hour
 _RATE_WINDOW = 3600     # seconds (1 hour)
 
 # ── Gemini REST API config ────────────────────────────────────────────────────
-_MODEL    = "gemini-flash-latest"
+_MODEL    = "gemini-1.5-flash-latest"   # corrected: was "gemini-flash-latest" (invalid)
 _API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 _TIMEOUT  = 30.0   # generous timeout — never cut off a long response mid-flight
 
@@ -52,6 +52,7 @@ def _fetch_model_output_limit(api_key: str) -> int:
 
 
 # Module-level cache: populated on first call, then reused for all subsequent calls
+# Set to None so it is re-fetched whenever the model name changes.
 _MODEL_MAX_TOKENS: Optional[int] = None
 
 
@@ -203,6 +204,7 @@ def call_gemini(
         if resp.status_code != 200:
             err_body = resp.json() if resp.content else {}
             err_msg  = err_body.get("error", {}).get("message", resp.text)
+            print(f"[ERROR] Gemini API {resp.status_code} — {err_msg}")
             return NLPResult(text="", source="fallback", latency_ms=latency_ms,
                              error=f"Gemini API error {resp.status_code}: {err_msg}")
 

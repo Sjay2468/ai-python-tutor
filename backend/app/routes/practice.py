@@ -76,23 +76,32 @@ def submit_answer(topic_id):
 
     is_correct = selected == question.correct_option
 
-    # Progressive hint selection (FR-PA-03)
+    # Build feedback — always reveal correct answer on wrong submission
     hint = None
     correct_option_revealed = None
+    correct_option_text = None
     if not is_correct:
         if attempt == 1:
             hint = question.hint_1
         elif attempt == 2:
             hint = question.hint_2
         else:
-            # Attempt 3+: reveal reasoning and the correct answer
             hint = question.hint_3
-            correct_option_revealed = question.correct_option
+        # Always reveal the correct answer so client can lock & highlight it
+        correct_option_revealed = question.correct_option
+        option_map = {
+            "A": question.option_a,
+            "B": question.option_b,
+            "C": question.option_c,
+            "D": question.option_d,
+        }
+        correct_option_text = option_map.get(question.correct_option, "")
 
     return jsonify({
         "correct": is_correct,
         "hint": hint,
         "correct_option": correct_option_revealed,
+        "correct_option_text": correct_option_text,
     }), 200
 
 

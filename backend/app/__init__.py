@@ -42,11 +42,13 @@ def create_app(config_object="config.Config"):
     from app.routes.practice import practice_bp
     from app.routes.chat import chat_bp
     from app.routes.progress import progress_bp
+    from app.routes.run_code import run_code_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/v1/auth")
     app.register_blueprint(lessons_bp, url_prefix="/api/v1/lessons")
     app.register_blueprint(practice_bp, url_prefix="/api/v1/practice")
     app.register_blueprint(chat_bp, url_prefix="/api/v1/chat")
     app.register_blueprint(progress_bp, url_prefix="/api/v1/progress")
+    app.register_blueprint(run_code_bp, url_prefix="/api/v1/run_code")
 
     return app

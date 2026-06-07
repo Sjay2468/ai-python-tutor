@@ -57,26 +57,26 @@ LESSONS = [
             "Conditionals allow your program to make decisions — to choose a different path "
             "of execution depending on whether a condition is True or False. "
             "Without conditionals, every program would do exactly the same thing every time it runs. "
-            "[Source: T1 Ch.5, T3 Ch.5]\n\n"
+            "\n\n"
             "THE THREE KEYWORDS:\n"
             "  • if   — checks the first condition. Its code block runs only if the condition is True.\n"
             "  • elif — short for 'else if'. Checked only if all previous conditions were False.\n"
             "           You can chain as many elif blocks as needed.\n"
             "  • else — the fallback. Runs only when NO previous condition was True.\n"
             "           There can only be ONE else per if-block, and it comes last.\n\n"
-            "INDENTATION IS MANDATORY: [Source: O5 — Python Docs]\n"
+            "INDENTATION IS MANDATORY:\n"
             "Python uses indentation (4 spaces) to define which lines of code belong inside "
             "a conditional block. Unlike other languages that use curly braces {}, "
             "Python uses whitespace. Incorrect indentation is one of the most common beginner errors. "
-            "[Source: E1 — Farah et al., 2023]\n\n"
+            "\n\n"
             "THE COLON IS MANDATORY:\n"
             "Every if, elif, and else line MUST end with a colon (:). "
-            "Forgetting the colon is the #1 SyntaxError for beginners. [Source: E4]\n\n"
+            "Forgetting the colon is the #1 SyntaxError for beginners.\n\n"
             "NESTED CONDITIONALS:\n"
             "You can place an if-block inside another if-block. This is called nesting. "
             "Each nested level requires an additional 4 spaces of indentation. "
-            "Keep nesting shallow (max 2–3 levels) to keep your code readable. [Source: T2 Ch.2]\n\n"
-            "TRUTHINESS AND FALSINESS: [Source: T4, O3]\n"
+            "Keep nesting shallow (max 2–3 levels) to keep your code readable.\n\n"
+            "TRUTHINESS AND FALSINESS:\n"
             "In Python, conditions do not have to be strict True/False booleans. "
             "Values that are considered False: 0, 0.0, '' (empty string), [] (empty list), None.\n"
             "Everything else is considered True."
@@ -87,7 +87,7 @@ LESSONS = [
             "Elif you are a staff member with a staff card, you enter through the staff gate. "
             "Else (none of the above), you must wait at the visitor's desk. "
             "The guard checks each condition IN ORDER and stops at the first match — "
-            "that is exactly how Python's if/elif/else works. [R2]"
+            "that is exactly how Python's if/elif/else works."
         ),
         "code_example": (
             "# ── Basic if / elif / else ────────────────────────────────────\n"
@@ -164,30 +164,30 @@ LESSONS = [
             "WHAT ARE LOOPS?\n"
             "A loop is a control structure that repeats a block of code multiple times. "
             "Without loops, you would have to copy-paste the same code hundreds of times. "
-            "Python has two types of loops: for and while. [Source: T1 Ch.7, T2 Ch.2]\n\n"
+            "Python has two types of loops: for and while.\n\n"
             "THE FOR LOOP — iterate over a sequence:\n"
             "A for loop goes through each item in a sequence (a list, string, or range) "
             "one at a time, running the loop body for each item.\n"
             "  Syntax: for variable in sequence:\n"
             "               code to repeat\n\n"
-            "THE range() FUNCTION: [Source: O1, O5]\n"
+            "THE range() FUNCTION:\n"
             "range(n)        → generates 0, 1, 2, ... n-1  (n items, starting at 0)\n"
             "range(a, b)     → generates a, a+1, ... b-1   (starts at a, stops BEFORE b)\n"
             "range(a, b, s)  → generates a, a+s, a+2s ...  (step s between each number)\n\n"
             "THE WHILE LOOP — repeat based on condition:\n"
             "A while loop repeats its body AS LONG AS its condition is True. "
             "It is used when you do NOT know in advance how many iterations you need — "
-            "for example, when waiting for valid user input. [Source: T1 Ch.7, T3 Ch.7]\n"
+            "for example, when waiting for valid user input.\n"
             "  Syntax: while condition:\n"
             "               code to repeat\n\n"
-            "CRITICAL — AVOID INFINITE LOOPS: [Source: E3 — Mow, 2006]\n"
+            "CRITICAL — AVOID INFINITE LOOPS:\n"
             "If the while loop's condition never becomes False, the loop runs forever "
             "(an infinite loop). Always make sure the loop variable is updated inside the body.\n\n"
-            "LOOP CONTROL KEYWORDS: [Source: T2 Ch.2, O1]\n"
+            "LOOP CONTROL KEYWORDS:\n"
             "  • break    — exits the loop immediately, regardless of the condition\n"
             "  • continue — skips the rest of the current iteration and goes to the next one\n"
             "  • else     — (unique to Python) runs after a loop completes NORMALLY (not broken)\n\n"
-            "NESTED LOOPS: [Source: T4]\n"
+            "NESTED LOOPS:\n"
             "You can place a loop inside another loop. The inner loop completes ALL of its "
             "iterations for EACH single iteration of the outer loop. "
             "Use nested loops carefully — they multiply execution time rapidly."
@@ -199,7 +199,7 @@ LESSONS = [
             "they keep reading WHILE they don't fully understand the topic yet. "
             "Once they understand, they stop. The key difference: "
             "for loops know exactly how many times they repeat (fixed list), "
-            "while loops repeat until something changes (condition). [R2]"
+            "while loops repeat until something changes (condition)."
         ),
         "code_example": (
             "# ── for loop with range() ─────────────────────────────────────\n"
@@ -248,7 +248,7 @@ LESSONS = [
             "  → Strings are sequences too — you can loop over them character by character.\n\n"
             "Lines 18–21: while count < 3\n"
             "  → The condition is checked BEFORE each iteration.\n"
-            "  → count += 1 is critical — without it, count stays 0 forever (infinite loop). [E3]\n\n"
+            "  → count += 1 is critical — without it, count stays 0 forever (infinite loop).\n\n"
             "Lines 24–29: break and continue\n"
             "  → continue (line 25): skips the rest of the loop body for n=3 and jumps to n=4.\n"
             "  → break (line 27): exits the entire loop immediately when n=6.\n"
@@ -279,13 +279,13 @@ LESSONS = [
             "A function is a named, reusable block of code that performs a specific task. "
             "You define it once and call it as many times as needed, from anywhere in your program. "
             "Functions are fundamental to writing clean, non-repetitive code. "
-            "[Source: T1 Ch.3, T2 Ch.3, O1]\n\n"
+            "\n\n"
             "WHY USE FUNCTIONS?\n"
             "  • Avoid repetition (Don't Repeat Yourself — the DRY principle)\n"
             "  • Break a big problem into smaller, manageable pieces\n"
             "  • Make code easier to read, test, and debug\n"
-            "  • Reuse the same logic with different input values [Source: O4 — Real Python]\n\n"
-            "DEFINING A FUNCTION: [Source: O5 — Python Docs]\n"
+            "  • Reuse the same logic with different input values\n\n"
+            "DEFINING A FUNCTION:\n"
             "  def function_name(parameter1, parameter2):\n"
             "      code body\n"
             "      return value     ← optional\n\n"
@@ -294,22 +294,22 @@ LESSONS = [
             "  • Arguments are the actual values you pass when calling the function.\n"
             "  • Example: def greet(name)  ← 'name' is the parameter\n"
             "             greet('Amina')   ← 'Amina' is the argument\n\n"
-            "DEFAULT PARAMETERS: [Source: T1 Ch.3]\n"
+            "DEFAULT PARAMETERS:\n"
             "You can give a parameter a default value using =. If no argument is passed for that "
             "parameter when calling the function, Python uses the default value.\n"
             "  Example: def power(base, exponent=2) → power(5) returns 25 (5²)\n\n"
-            "THE RETURN STATEMENT: [Source: T2 Ch.3]\n"
+            "THE RETURN STATEMENT:\n"
             "  • return sends a value BACK to the caller of the function.\n"
             "  • Once Python hits a return statement, the function STOPS immediately.\n"
             "  • A function without a return statement automatically returns None.\n"
             "  • return is different from print() — print() displays output on screen,\n"
             "    but does NOT send a value back to the rest of the program.\n\n"
-            "SCOPE — LOCAL vs GLOBAL VARIABLES: [Source: T4, O4]\n"
+            "SCOPE — LOCAL vs GLOBAL VARIABLES:\n"
             "Variables created INSIDE a function are local — they only exist within that function "
             "and are destroyed when the function finishes. "
             "Variables created OUTSIDE functions are global — accessible everywhere. "
             "Beginners often try to use a function's local variable outside the function and get "
-            "a NameError. [Source: E1 — Farah et al., 2023]"
+            "a NameError."
         ),
         "analogy": (
             "A function is like a recipe in a cookbook. You write the recipe once (define the function), "
@@ -318,7 +318,7 @@ LESSONS = [
             "providing the actual ingredients you have (arguments). "
             "The dish you produce at the end is the return value. "
             "Anyone in the house can use the same recipe (reusability), "
-            "and you don't need to rewrite it each time. [R2]"
+            "and you don't need to rewrite it each time."
         ),
         "code_example": (
             "# ── Defining and calling a simple function ────────────────────\n"
@@ -371,7 +371,7 @@ LESSONS = [
             "  → Line 27: x = show_info(...) → x gets None because there is no return.\n\n"
             "Lines 30–32: Scope\n"
             "  → local_var is created inside calculate(). It is DESTROYED when calculate() ends.\n"
-            "  → Trying to access local_var outside the function raises NameError. [E1]"
+            "  → Trying to access local_var outside the function raises NameError."
         ),
         "key_points": json.dumps([
             "Define a function with: def function_name(parameters): then an indented body.",
@@ -397,22 +397,22 @@ LESSONS = [
             "WHAT IS A LIST?\n"
             "A list is an ordered, mutable (changeable) collection of items stored in a single variable. "
             "Lists can hold items of any data type, and they can even hold different types at the same time. "
-            "Lists allow duplicates. [Source: T1 Ch.10, T3 Ch.3, O1]\n\n"
+            "Lists allow duplicates.\n\n"
             "CREATING A LIST:\n"
             "  my_list = [item1, item2, item3]  ← square brackets\n"
             "  empty_list = []                  ← empty list\n\n"
-            "INDEXING — accessing items: [Source: O2]\n"
+            "INDEXING — accessing items:\n"
             "  • Each item has a position number called an index, starting at 0 (not 1).\n"
             "  • fruits[0]  → first item\n"
             "  • fruits[1]  → second item\n"
             "  • fruits[-1] → LAST item (negative indices count from the end)\n"
             "  • fruits[-2] → second to last\n\n"
-            "SLICING — getting a sub-list: [Source: T1 Ch.10]\n"
+            "SLICING — getting a sub-list:\n"
             "  • fruits[1:3]  → items at index 1 and 2 (stops BEFORE index 3)\n"
             "  • fruits[:2]   → first two items (from the start up to but not including index 2)\n"
             "  • fruits[2:]   → from index 2 to the end\n"
             "  • fruits[::2]  → every other item\n\n"
-            "COMMON LIST METHODS: [Source: O1, O5]\n"
+            "COMMON LIST METHODS:\n"
             "  • .append(x)   — adds x to the END of the list\n"
             "  • .insert(i,x) — inserts x at position i\n"
             "  • .remove(x)   — removes the FIRST occurrence of x (raises ValueError if not found)\n"
@@ -422,7 +422,7 @@ LESSONS = [
             "  • .index(x)    — returns the index of the first occurrence of x\n"
             "  • .count(x)    — returns how many times x appears\n"
             "  • .clear()     — removes all items\n\n"
-            "COMMON BEGINNER ERRORS: [Source: E2 — Huang et al., 2023]\n"
+            "COMMON BEGINNER ERRORS:\n"
             "  • IndexError: accessing an index that doesn't exist (e.g. items[10] on a 3-item list)\n"
             "  • Starting indexing at 1 instead of 0 (off-by-one error)"
         ),
@@ -433,7 +433,7 @@ LESSONS = [
             "add a new person to the end of the queue (append), "
             "remove someone from the middle (remove), "
             "or check how many people are waiting (len). "
-            "The queue maintains order — the positions don't shift unless you explicitly change them. [R2]"
+            "The queue maintains order — the positions don't shift unless you explicitly change them."
         ),
         "code_example": (
             "# ── Creating lists ────────────────────────────────────────────\n"
@@ -512,30 +512,30 @@ LESSONS = [
             "A dictionary stores data as key-value pairs. "
             "Instead of accessing items by a position number (like a list), "
             "you look up values by a meaningful key — similar to looking up a word in a real dictionary. "
-            "[Source: T1 Ch.11, T2 Ch.5, O2]\n\n"
+            "\n\n"
             "CREATING A DICTIONARY:\n"
             "  my_dict = {key1: value1, key2: value2}\n"
             "  empty_dict = {}   or   empty_dict = dict()\n\n"
-            "RULES FOR KEYS: [Source: O5 — Python Docs]\n"
+            "RULES FOR KEYS:\n"
             "  • Keys must be UNIQUE — if you assign the same key twice, the second value overwrites the first.\n"
             "  • Keys must be IMMUTABLE — strings, integers, and tuples can be keys; lists cannot.\n"
             "  • Values can be anything: strings, integers, lists, even other dictionaries.\n\n"
-            "ACCESSING VALUES: [Source: O1]\n"
+            "ACCESSING VALUES:\n"
             "  • dict[key]        — gets the value; raises KeyError if key doesn't exist\n"
             "  • dict.get(key)    — gets the value; returns None if key doesn't exist (safer)\n"
             "  • dict.get(key, d) — returns default value d if key is not found\n\n"
-            "ADDING AND UPDATING: [Source: T2 Ch.5]\n"
+            "ADDING AND UPDATING:\n"
             "  • dict[new_key] = value   — adds a new key-value pair\n"
             "  • dict[exist_key] = value — updates the value for an existing key\n\n"
-            "REMOVING ENTRIES: [Source: O3]\n"
+            "REMOVING ENTRIES:\n"
             "  • del dict[key]    — removes a key-value pair (KeyError if key not found)\n"
             "  • dict.pop(key)    — removes and returns the value (KeyError if not found)\n"
             "  • dict.clear()     — removes ALL entries\n\n"
-            "ITERATING OVER A DICTIONARY: [Source: T1 Ch.11]\n"
+            "ITERATING OVER A DICTIONARY:\n"
             "  • dict.keys()    — returns all keys\n"
             "  • dict.values()  — returns all values\n"
             "  • dict.items()   — returns all (key, value) pairs as tuples — best for looping\n\n"
-            "COMMON BEGINNER ERROR: [Source: E2 — Huang et al., 2023]\n"
+            "COMMON BEGINNER ERROR:\n"
             "Accessing a key that doesn't exist with dict[key] raises a KeyError. "
             "Use dict.get(key) to avoid crashes when the key may or may not exist."
         ),
@@ -546,7 +546,7 @@ LESSONS = [
             "but the same word can have a long or complex definition (values can be complex). "
             "Another good analogy: think of a student ID card system — "
             "each student has a unique ID number (key) linked to their personal information (value). "
-            "You look up a student by their ID, not by their position in a list. [R2]"
+            "You look up a student by their ID, not by their position in a list."
         ),
         "code_example": (
             "# ── Creating a dictionary ─────────────────────────────────────\n"
@@ -626,8 +626,8 @@ LESSONS = [
             "Errors (also called exceptions or bugs) are a normal part of programming. "
             "Every programmer — including professionals — encounters errors every day. "
             "The skill is learning to READ the error message and fix the cause. "
-            "[Source: T2 Ch.11, O4 — Real Python]\n\n"
-            "TWO MAIN CATEGORIES OF ERRORS: [Source: E1 — Farah et al., 2023]\n\n"
+            "\n\n"
+            "TWO MAIN CATEGORIES OF ERRORS:\n\n"
             "1. SYNTAX ERRORS — Python cannot even parse your code:\n"
             "   The program refuses to run at all. Common causes:\n"
             "   • Missing colon (:) after if, for, while, def\n"
@@ -635,7 +635,7 @@ LESSONS = [
             "   • Unclosed brackets, parentheses, or quotes\n"
             "   • Using = instead of == inside a condition\n\n"
             "2. RUNTIME ERRORS (Exceptions) — code is valid but something goes wrong while running:\n"
-            "   The program starts but crashes at a specific line. The most important ones: [Source: E2]\n\n"
+            "   The program starts but crashes at a specific line. The most important ones:\n\n"
             "   • NameError      — you used a variable name that was never defined\n"
             "                      Fix: check spelling; make sure the variable was assigned first\n"
             "   • TypeError      — you applied an operation to incompatible types\n"
@@ -651,16 +651,16 @@ LESSONS = [
             "                      Fix: always check the divisor before dividing\n"
             "   • AttributeError — you called a method that doesn't exist on that type\n"
             "                      e.g. (5).append(3)  (integers don't have append)\n\n"
-            "READING A TRACEBACK: [Source: O4 — Real Python]\n"
+            "READING A TRACEBACK:\n"
             "When an error occurs, Python prints a traceback — a step-by-step trail of where "
             "the error happened. Always read it from the BOTTOM up:\n"
             "  1. The LAST line tells you the error type and message (most important)\n"
             "  2. The lines above show which file and line number the crash happened on\n\n"
-            "HANDLING ERRORS — try / except: [Source: T1 Ch.14, O5]\n"
+            "HANDLING ERRORS — try / except:\n"
             "Instead of letting an error crash your program, you can 'catch' it using try/except. "
             "Code inside 'try' runs normally. If an error occurs, the 'except' block runs instead.\n"
             "You can also add 'finally' to run code regardless of whether an error occurred.\n\n"
-            "DEBUGGING STRATEGIES: [Source: E3 — Mow, 2006; E4 — Altadmri & Brown, 2015]\n"
+            "DEBUGGING STRATEGIES:\n"
             "  • Print debugging: add print() statements to see variable values at different points\n"
             "  • Read error messages carefully — they tell you the exact line and error type\n"
             "  • Test small pieces of code in isolation\n"
@@ -672,7 +672,7 @@ LESSONS = [
             "A Runtime Error is like giving someone perfect directions to the wrong address — "
             "the instructions look fine, but something goes wrong when you actually follow them. "
             "Reading the traceback is like reading the error log in a car's black box: "
-            "it tells you exactly when and where something went wrong so you can fix it. [R2]"
+            "it tells you exactly when and where something went wrong so you can fix it."
         ),
         "code_example": (
             "# ── Common Syntax Errors (these WON'T run) ────────────────────\n"
@@ -759,7 +759,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Python uses a shortened combination of two English words.",
         "hint_2": "It is a blend of 'else' and 'if' merged into one keyword.",
-        "hint_3": "C is correct: elif. It means 'else if' and is checked only when all previous conditions are False. [T1 Ch.5]",
+        "hint_3": "C is correct: elif. It means 'else if' and is checked only when all previous conditions are False.",
     },
     {
         "topic_id": "L04",
@@ -769,7 +769,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Python uses a specific punctuation mark to signal the start of a new code block.",
         "hint_2": "Unlike Java or C, Python uses one character instead of curly braces to open a block.",
-        "hint_3": "B is correct: colon (:). Every if, elif, else, for, while, and def line must end with ':'. [E4]",
+        "hint_3": "B is correct: colon (:). Every if, elif, else, for, while, and def line must end with ':'.",
     },
     {
         "topic_id": "L04",
@@ -779,7 +779,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "First evaluate whether the condition 5 > 10 is True or False.",
         "hint_2": "5 is NOT greater than 10, so the 'if' block is skipped entirely.",
-        "hint_3": "C is correct: B. Since 5 > 10 is False, Python runs the 'else' block and prints 'B'. [T1 Ch.5]",
+        "hint_3": "C is correct: B. Since 5 > 10 is False, Python runs the 'else' block and prints 'B'.",
     },
     {
         "topic_id": "L04",
@@ -789,7 +789,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Python uses whitespace instead of braces, unlike most other languages.",
         "hint_2": "The code inside a block is shifted to the RIGHT by a consistent number of spaces.",
-        "hint_3": "C is correct: Indentation. Python uses 4 spaces to group code inside blocks — it is mandatory. [E1]",
+        "hint_3": "C is correct: Indentation. Python uses 4 spaces to group code inside blocks — it is mandatory.",
     },
     {
         "topic_id": "L04",
@@ -799,7 +799,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "D",
         "hint_1": "This block has no condition — it is the last resort fallback.",
         "hint_2": "It catches all cases that were not handled by any if or elif above it.",
-        "hint_3": "D is correct: else. It runs when no 'if' or 'elif' condition was True. There can only be one else. [T3 Ch.5]",
+        "hint_3": "D is correct: else. It runs when no 'if' or 'elif' condition was True. There can only be one else.",
     },
 
     # ── L05 — Loops ───────────────────────────────────────────────────────────
@@ -811,7 +811,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "range(4) generates a sequence of numbers — count exactly how many there are.",
         "hint_2": "range(4) produces: 0, 1, 2, 3 — that is four values.",
-        "hint_3": "B is correct: 4. range(4) gives 0, 1, 2, 3 — four iterations. [T1 Ch.7]",
+        "hint_3": "B is correct: 4. range(4) gives 0, 1, 2, 3 — four iterations.",
     },
     {
         "topic_id": "L05",
@@ -823,7 +823,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Think about what the condition checks — can it ever become False without incrementing?",
         "hint_2": "If the variable never changes, the condition stays True permanently.",
-        "hint_3": "C is correct: infinite loop. Without incrementing, the while condition never becomes False. This is a classic beginner mistake. [E3]",
+        "hint_3": "C is correct: infinite loop. Without incrementing, the while condition never becomes False. This is a classic beginner mistake.",
     },
     {
         "topic_id": "L05",
@@ -835,7 +835,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "The word 'break' literally means to stop something.",
         "hint_2": "It terminates the entire loop, not just one iteration. Execution continues after the loop.",
-        "hint_3": "B is correct: exits the loop immediately. The keyword for skipping ONE iteration is 'continue'. [O1]",
+        "hint_3": "B is correct: exits the loop immediately. The keyword for skipping ONE iteration is 'continue'.",
     },
     {
         "topic_id": "L05",
@@ -845,7 +845,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "range(start, stop) starts at the first number and stops BEFORE the second.",
         "hint_2": "It includes 2 but does NOT include 6.",
-        "hint_3": "B is correct: 2, 3, 4, 5. range(2, 6) starts at 2 and stops before 6 (exclusive). [O5]",
+        "hint_3": "B is correct: 2, 3, 4, 5. range(2, 6) starts at 2 and stops before 6 (exclusive).",
     },
     {
         "topic_id": "L05",
@@ -855,7 +855,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "One loop type runs for a fixed number of steps; the other runs until a condition changes.",
         "hint_2": "When the number of repetitions depends on runtime conditions (like user input), one loop type fits better.",
-        "hint_3": "B is correct: while loop. Use it when the number of iterations is not known ahead of time. [T1 Ch.7]",
+        "hint_3": "B is correct: while loop. Use it when the number of iterations is not known ahead of time.",
     },
 
     # ── L06 — Functions ───────────────────────────────────────────────────────
@@ -867,7 +867,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "It is an abbreviation of the word 'define'.",
         "hint_2": "It is three letters long and starts with 'd'.",
-        "hint_3": "C is correct: def. You write 'def function_name():' to create a function. [T1 Ch.3]",
+        "hint_3": "C is correct: def. You write 'def function_name():' to create a function.",
     },
     {
         "topic_id": "L06",
@@ -879,7 +879,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Think about what happens AFTER a function finishes its job.",
         "hint_2": "The value doesn't automatically appear on screen — it is sent somewhere back to the code that called the function.",
-        "hint_3": "B is correct: sends a value back to the caller and stops the function. You can then store or print that returned value. [T2 Ch.3]",
+        "hint_3": "B is correct: sends a value back to the caller and stops the function. You can then store or print that returned value.",
     },
     {
         "topic_id": "L06",
@@ -889,7 +889,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Python always returns something from a function, even when you don't specify.",
         "hint_2": "The special value representing 'nothing' in Python is a specific keyword.",
-        "hint_3": "C is correct: None. Python implicitly returns None when there is no return statement. [O5]",
+        "hint_3": "C is correct: None. Python implicitly returns None when there is no return statement.",
     },
     {
         "topic_id": "L06",
@@ -901,7 +901,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Parameters allow you to pass information INTO a function.",
         "hint_2": "They appear inside the parentheses in the 'def' line.",
-        "hint_3": "B is correct: a variable that receives input. Parameters are listed in () when defining the function. Arguments are the actual values passed in when calling it. [T1 Ch.3]",
+        "hint_3": "B is correct: a variable that receives input. Parameters are listed in () when defining the function. Arguments are the actual values passed in when calling it.",
     },
     {
         "topic_id": "L06",
@@ -911,7 +911,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "You call (run) a function by using its name followed by parentheses containing arguments.",
         "hint_2": "'def' is for DEFINING a function, not for calling it. Look for just the function name.",
-        "hint_3": "C is correct: greet('Amina'). To call a function, write its name with arguments in parentheses. [O2]",
+        "hint_3": "C is correct: greet('Amina'). To call a function, write its name with arguments in parentheses.",
     },
 
     # ── L07 — Lists ───────────────────────────────────────────────────────────
@@ -923,7 +923,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Python does not start counting from 1 the way humans naturally do.",
         "hint_2": "Most programming languages, including Python, start index counting from zero.",
-        "hint_3": "B is correct: 0. The first item is always at index 0. Accessing index 1 would give the SECOND item. [E2]",
+        "hint_3": "B is correct: 0. The first item is always at index 0. Accessing index 1 would give the SECOND item.",
     },
     {
         "topic_id": "L07",
@@ -933,7 +933,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Think of the word that means 'to attach something to the end'.",
         "hint_2": "It is a list method starting with the letter 'a'. Use insert() to add at a specific position.",
-        "hint_3": "C is correct: append(). It adds one item to the end of the list. [T1 Ch.10]",
+        "hint_3": "C is correct: append(). It adds one item to the end of the list.",
     },
     {
         "topic_id": "L07",
@@ -943,7 +943,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Negative indices count from the END of the list.",
         "hint_2": "-1 always refers to the very last item in any list.",
-        "hint_3": "C is correct: cherry. fruits[-1] is the last element. fruits[-2] would be 'banana'. [T3 Ch.3]",
+        "hint_3": "C is correct: cherry. fruits[-1] is the last element. fruits[-2] would be 'banana'.",
     },
     {
         "topic_id": "L07",
@@ -955,7 +955,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Slicing syntax: list[start:stop] — the stop index is EXCLUDED from the result.",
         "hint_2": "Index 1 is 'banana' and index 2 is 'cherry'. Index 3 ('mango') is not included.",
-        "hint_3": "B is correct: ['banana','cherry']. Slicing includes start (1) and excludes stop (3). [T1 Ch.10]",
+        "hint_3": "B is correct: ['banana','cherry']. Slicing includes start (1) and excludes stop (3).",
     },
     {
         "topic_id": "L07",
@@ -965,7 +965,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "You are accessing a list position (index) that is beyond the valid range.",
         "hint_2": "The error name contains the word 'Index'.",
-        "hint_3": "C is correct: IndexError. For example, accessing index 10 on a 3-item list (valid: 0,1,2). [E2]",
+        "hint_3": "C is correct: IndexError. For example, accessing index 10 on a 3-item list (valid: 0,1,2).",
     },
 
     # ── L08 — Dictionaries ────────────────────────────────────────────────────
@@ -977,7 +977,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Dictionaries are accessed by KEY, not by position number.",
         "hint_2": "You use the key inside square brackets, just like indexing a list but with a key name.",
-        "hint_3": "C is correct: student['name']. Use the key in square brackets to look up a value. [T1 Ch.11]",
+        "hint_3": "C is correct: student['name']. Use the key in square brackets to look up a value.",
     },
     {
         "topic_id": "L08",
@@ -987,7 +987,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "Think about a real dictionary — can the same word appear on two different pages?",
         "hint_2": "If two entries had the same key, Python wouldn't know which value to return.",
-        "hint_3": "B is correct: Keys must be UNIQUE. Each key can appear only once; values can repeat. [T1 Ch.11]",
+        "hint_3": "B is correct: Keys must be UNIQUE. Each key can appear only once; values can repeat.",
     },
     {
         "topic_id": "L08",
@@ -997,7 +997,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "One method crashes with a KeyError; the other returns None if the key is missing.",
         "hint_2": "The safer method is a built-in dictionary method that accepts an optional default value.",
-        "hint_3": "C is correct: dict.get(key). It returns None instead of raising KeyError if the key doesn't exist. [E2]",
+        "hint_3": "C is correct: dict.get(key). It returns None instead of raising KeyError if the key doesn't exist.",
     },
     {
         "topic_id": "L08",
@@ -1007,7 +1007,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "There are three iteration methods: .keys(), .values(), and .items().",
         "hint_2": ".items() returns both pieces of each entry — the key AND the value together.",
-        "hint_3": "C is correct: key-value pairs as tuples. Use: for key, value in dict.items(): [T1 Ch.11]",
+        "hint_3": "C is correct: key-value pairs as tuples. Use: for key, value in dict.items():",
     },
     {
         "topic_id": "L08",
@@ -1019,7 +1019,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "Adding to a dictionary uses the same syntax as accessing it.",
         "hint_2": "Assign a value to a key using square brackets — if the key doesn't exist, it is created.",
-        "hint_3": "C is correct: student['grade'] = 'A'. If the key exists it is UPDATED; if not, it is ADDED. [T2 Ch.5]",
+        "hint_3": "C is correct: student['grade'] = 'A'. If the key exists it is UPDATED; if not, it is ADDED.",
     },
 
     # ── L09 — Error Types & Debugging ────────────────────────────────────────
@@ -1031,7 +1031,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "This error is caught during the 'parsing' phase, before any line is executed.",
         "hint_2": "It is caused by breaking Python's grammar rules — missing colons, wrong indentation, etc.",
-        "hint_3": "C is correct: SyntaxError. It means Python could not parse the code structure. [E1]",
+        "hint_3": "C is correct: SyntaxError. It means Python could not parse the code structure.",
     },
     {
         "topic_id": "L09",
@@ -1041,7 +1041,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "D",
         "hint_1": "You are using a name (variable) that Python has never seen before.",
         "hint_2": "The error name literally says your variable 'name' is not defined.",
-        "hint_3": "D is correct: NameError. Python cannot find 'score' because it was never created or assigned. [E1]",
+        "hint_3": "D is correct: NameError. Python cannot find 'score' because it was never created or assigned.",
     },
     {
         "topic_id": "L09",
@@ -1051,7 +1051,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "You are combining two values of DIFFERENT data types using the + operator.",
         "hint_2": "Python cannot add a string and an integer directly — the types are incompatible.",
-        "hint_3": "B is correct: TypeError. Fix it with str(19) or use an f-string: f'Age: {19}'. [E1]",
+        "hint_3": "B is correct: TypeError. Fix it with str(19) or use an f-string: f'Age: {19}'.",
     },
     {
         "topic_id": "L09",
@@ -1063,7 +1063,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "B",
         "hint_1": "The word 'try' suggests attempting something that might fail.",
         "hint_2": "'except' catches the error if it happens and runs an alternative block of code.",
-        "hint_3": "B is correct: handle errors gracefully. The program continues instead of crashing. [T1 Ch.14]",
+        "hint_3": "B is correct: handle errors gracefully. The program continues instead of crashing.",
     },
     {
         "topic_id": "L09",
@@ -1073,7 +1073,7 @@ QUESTIONS_BATCH_2 = [
         "correct_option": "C",
         "hint_1": "The most important information in a traceback is at a specific end.",
         "hint_2": "The error type and exact message are always printed LAST.",
-        "hint_3": "C is correct: Bottom up. The last line shows the error type and message. Lines above show the call stack. [O4]",
+        "hint_3": "C is correct: Bottom up. The last line shows the error type and message. Lines above show the call stack.",
     },
 ]
 

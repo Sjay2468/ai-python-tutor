@@ -88,6 +88,40 @@ class ApiService {
     }
   }
 
+  /// Complete a practice session and save the score
+  Future<Map<String, dynamic>?> completePractice(
+      String topicId, int correctCount, int totalCount) async {
+    try {
+      final response = await _dio.post(
+        '/practice/$topicId/complete',
+        data: {
+          'correct_count': correctCount,
+          'total_count': totalCount,
+        },
+      );
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Run a Python code snippet in the server-side sandbox
+  Future<Map<String, dynamic>?> runCode(String code) async {
+    try {
+      final response = await _dio.post(
+        '/run_code',
+        data: {'code': code},
+      );
+      return response.data;
+    } catch (e) {
+      return {
+        'stdout': '',
+        'stderr': 'Connection error. Please check your internet and try again.',
+        'exit_code': 1,
+      };
+    }
+  }
+
   /// Send a message to the Hybrid AI Chat
   Future<Map<String, dynamic>?> sendMessage(String message, {Map<String, dynamic>? contextData}) async {
     try {

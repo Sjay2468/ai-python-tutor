@@ -51,7 +51,7 @@ LESSONS = [
             "You create a variable by writing a name, followed by an equals sign (=), "
             "followed by the value you want to store. "
             "In Python, you do not need to declare the type — Python automatically detects it for you "
-            "(this is called dynamic typing). [Source: T1 Ch.2, O1]\n\n"
+            "(this is called dynamic typing).\n\n"
             "NAMING RULES (O5 — Python Docs):\n"
             "  • Names can only contain letters (a–z, A–Z), digits (0–9), and underscores (_)\n"
             "  • Names CANNOT start with a digit (e.g. '2score' is invalid)\n"
@@ -64,18 +64,18 @@ LESSONS = [
             "  • bool  — logical values: exactly True or False (capital T and F required)\n\n"
             "CHECKING THE TYPE:\n"
             "You can always ask Python what type a variable is by using the built-in type() function. "
-            "This is especially useful when debugging. [Source: T1 Ch.2, O2]\n\n"
+            "This is especially useful when debugging.\n\n"
             "REASSIGNING VARIABLES:\n"
             "Unlike a constant, a variable's value can be changed at any time simply by assigning "
             "a new value to the same name. Python will forget the old value and remember the new one. "
-            "[Source: T3 Ch.2]"
+            ""
         ),
         "analogy": (
             "Think of a variable like a labelled box in a storage room. "
             "The label on the box is the variable name, and whatever you put inside the box is the value. "
             "You can have many boxes with different labels (name, age, score), each holding different things. "
             "At any time you can open a box and replace what's inside — that's reassignment. "
-            "Python reads the label to find the right box, not the position on the shelf. [R2]"
+            "Python reads the label to find the right box, not the position on the shelf."
         ),
         "code_example": (
             "# ── Creating variables of each data type ──────────────────────\n"
@@ -141,7 +141,7 @@ LESSONS = [
             "WHAT ARE OPERATORS?\n"
             "Operators are special symbols that tell Python to perform a specific action on "
             "one or more values (called operands). Python has five main categories of operators "
-            "that beginners need to know. [Source: T1 Ch.2, O1, O3]\n\n"
+            "that beginners need to know.\n\n"
             "1. ARITHMETIC OPERATORS — for maths:\n"
             "  +   Addition          → 5 + 3  = 8\n"
             "  -   Subtraction       → 5 - 3  = 2\n"
@@ -166,7 +166,7 @@ LESSONS = [
             "  +=  Add and assign    → x += 3  is shorthand for  x = x + 3\n"
             "  -=  Subtract & assign → x -= 2  is shorthand for  x = x - 2\n"
             "  *=  Multiply & assign → x *= 4  is shorthand for  x = x * 4\n\n"
-            "COMMON BEGINNER MISTAKE: [Source: E4 — Altadmri & Brown, 2015]\n"
+            "COMMON BEGINNER MISTAKE:\n"
             "Using = (assignment) when you mean == (comparison) inside a condition. "
             "Remember: = stores a value; == checks if two values are equal."
         ),
@@ -177,7 +177,7 @@ LESSONS = [
             "Comparison operators are like a referee in a sports match — "
             "they look at both teams (values) and announce a verdict: True or False. "
             "Logical operators (and, or) are like combining rules: "
-            "'You can enter the exam hall IF you have your student ID AND your exam form.' [R2]"
+            "'You can enter the exam hall IF you have your student ID AND your exam form.'"
         ),
         "code_example": (
             "# ── Arithmetic operators ──────────────────────────────────────\n"
@@ -248,21 +248,21 @@ LESSONS = [
         "explanation": (
             "WHAT IS I/O?\n"
             "I/O stands for Input and Output — the two ways your program communicates with the user. "
-            "Without I/O, a program works in silence and nobody can interact with it. [Source: T1 Ch.1, O2]\n\n"
+            "Without I/O, a program works in silence and nobody can interact with it.\n\n"
             "OUTPUT — print():\n"
             "The print() function displays text, numbers, or variable values on the screen. "
             "It is the most-used function in Python and the first thing every beginner learns.\n"
             "  • You can pass multiple values separated by commas — print() adds a space between them.\n"
             "  • You can customise the separator with the sep parameter: print('a','b', sep='-') → a-b\n"
             "  • By default print() adds a new line at the end. Use end='' to prevent this.\n\n"
-            "F-STRINGS (Formatted Strings): [Source: T1 Ch.2, O1]\n"
+            "F-STRINGS (Formatted Strings):\n"
             "The modern way to embed variable values directly inside a string is to use an f-string. "
             "Place the letter f before the opening quote, then put variable names inside curly braces {}.\n"
             "  Example: name = 'Amina'  →  print(f'Hello, {name}!')  →  Hello, Amina!\n\n"
             "INPUT — input():\n"
             "The input() function pauses the program and waits for the user to type something "
             "and press Enter. Whatever the user types is returned as a string.\n\n"
-            "CRITICAL RULE — input() ALWAYS returns a string (str): [Source: E1 — Farah et al., 2023]\n"
+            "CRITICAL RULE — input() ALWAYS returns a string (str):\n"
             "This is one of the most common beginner mistakes. If a user types '25', Python stores "
             "the two-character string '25', NOT the number 25. "
             "To use it as a number you MUST convert it:\n"
@@ -276,7 +276,7 @@ LESSONS = [
             "and remembers it as a string. "
             "The key rule to remember: your program's ears only understand text. "
             "If someone says the number 'twenty-five', you still hear it as a word, not a number. "
-            "You have to translate (convert) it yourself before you can do maths with it. [R2]"
+            "You have to translate (convert) it yourself before you can do maths with it."
         ),
         "code_example": (
             "# ── Basic output with print() ─────────────────────────────────\n"
@@ -363,7 +363,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "B",
         "hint_1": "Text (strings) must be wrapped in quotes in Python.",
         "hint_2": "Single quotes or double quotes both work for strings. Look for quotes around the word Python.",
-        "hint_3": "B is correct: x = 'Python'. Without quotes, Python thinks 'Python' is a variable name, not text. [E4]",
+        "hint_3": "B is correct: x = 'Python'. Without quotes, Python thinks 'Python' is a variable name, not text.",
     },
     {
         "topic_id": "L01",
@@ -387,7 +387,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "C",
         "hint_1": "Variable names cannot start with a digit, and cannot contain spaces or hyphens.",
         "hint_2": "Python variable names can only use letters, digits, and underscores (_).",
-        "hint_3": "C is correct: my_score. Underscores are allowed. Spaces, hyphens, and leading digits are not. [O5]",
+        "hint_3": "C is correct: my_score. Underscores are allowed. Spaces, hyphens, and leading digits are not.",
     },
     {
         "topic_id": "L01",
@@ -411,7 +411,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "C",
         "hint_1": "The % operator gives the REMAINDER after division, not the quotient.",
         "hint_2": "10 divided by 3 is 3 remainder 1. That remainder is what % returns.",
-        "hint_3": "C is correct: 1. 10 = 3×3 + 1, so 10 % 3 = 1. [T1 Ch.2]",
+        "hint_3": "C is correct: 1. 10 = 3×3 + 1, so 10 % 3 = 1.",
     },
     {
         "topic_id": "L02",
@@ -421,7 +421,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "B",
         "hint_1": "One equals sign (=) assigns a value to a variable. Another symbol is used for comparison.",
         "hint_2": "Equality comparison uses TWO equals signs together: ==.",
-        "hint_3": "B is correct: ==. A single = assigns; double == compares. Mixing them up is the #1 beginner error. [E4]",
+        "hint_3": "B is correct: ==. A single = assigns; double == compares. Mixing them up is the #1 beginner error.",
     },
     {
         "topic_id": "L02",
@@ -441,7 +441,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "B",
         "hint_1": "'and' requires BOTH sides to be True to return True.",
         "hint_2": "Since one side (False) is not True, the entire 'and' expression is False.",
-        "hint_3": "B is correct: False. 'and' only returns True when BOTH operands are True. [T1 Ch.5]",
+        "hint_3": "B is correct: False. 'and' only returns True when BOTH operands are True.",
     },
     {
         "topic_id": "L02",
@@ -451,7 +451,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "C",
         "hint_1": "// is floor division — it divides and then removes the decimal part, rounding DOWN.",
         "hint_2": "15 / 4 = 3.75. Floor division keeps only the whole number part: 3.",
-        "hint_3": "C is correct: 3. Floor division discards the decimal, so 3.75 becomes 3. [O1]",
+        "hint_3": "C is correct: 3. Floor division discards the decimal, so 3.75 becomes 3.",
     },
 
     # ── L03 — Basic I/O ───────────────────────────────────────────────────────
@@ -465,7 +465,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "C",
         "hint_1": "Even if the user types a number like 25, input() still wraps it in a specific type.",
         "hint_2": "input() always treats what the user typed as text, regardless of what they typed.",
-        "hint_3": "C is correct: str. input() ALWAYS returns a string. Convert with int() or float() to use it as a number. [E1]",
+        "hint_3": "C is correct: str. input() ALWAYS returns a string. Convert with int() or float() to use it as a number.",
     },
     {
         "topic_id": "L03",
@@ -489,7 +489,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "B",
         "hint_1": "Remember what type input() always returns.",
         "hint_2": "You cannot add a string and an integer directly in Python — the types must match.",
-        "hint_3": "B is correct: TypeError. age is a str (e.g. '19') and you can't add str + int. Fix: age = int(input('Enter age: ')). [E1]",
+        "hint_3": "B is correct: TypeError. age is a str (e.g. '19') and you can't add str + int. Fix: age = int(input('Enter age: ')).",
     },
     {
         "topic_id": "L03",
@@ -513,7 +513,7 @@ QUESTIONS_BATCH_1 = [
         "correct_option": "D",
         "hint_1": "You have already seen this function used in every example in the lesson.",
         "hint_2": "It is the most basic output function in Python and starts with the letter 'p'.",
-        "hint_3": "D is correct: print(). It is Python's built-in function for displaying values on the screen. [T1 Ch.1]",
+        "hint_3": "D is correct: print(). It is Python's built-in function for displaying values on the screen.",
     },
 ]
 

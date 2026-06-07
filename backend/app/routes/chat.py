@@ -47,12 +47,25 @@ def gemini_health():
     """
     import os
     import requests as req
+    from app.engine.nlp_module import get_gemini_api_key
 
-    api_key = os.environ.get("GOOGLE_API_KEY", "")
+    api_key = get_gemini_api_key()
+
+    # Scan env for keys containing helpful keywords to aid diagnostic
+    env_keys = []
+    for k, v in os.environ.items():
+        k_upper = k.upper()
+        if any(x in k_upper for x in ["API", "KEY", "GOOGLE", "GEMINI"]):
+            val_str = v.strip()
+            # Mask value but show first few characters (e.g. AIzaSy or AQ.) for verification
+            masked = val_str[:8] + "..." if len(val_str) > 8 else "..."
+            env_keys.append({"key": k, "preview": masked, "length": len(val_str)})
+
     if not api_key:
         return jsonify({
             "status": "error",
-            "reason": "GOOGLE_API_KEY environment variable is not set.",
+            "reason": "Gemini API key not found. Checked GOOGLE_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY, and scanned env for AIza/AQ prefix fallbacks.",
+            "available_env_keys": env_keys,
         }), 500
 
     model = "gemini-1.5-flash-latest"
@@ -65,7 +78,8 @@ def gemini_health():
                 "status": "ok",
                 "model": data.get("name"),
                 "output_token_limit": data.get("outputTokenLimit"),
-                "key_prefix": api_key[:8] + "...",
+                "key_preview": api_key[:8] + "...",
+                "available_env_keys": env_keys,
             }), 200
         else:
             err = r.json().get("error", {})
@@ -73,8 +87,13 @@ def gemini_health():
                 "status": "error",
                 "http_status": r.status_code,
                 "reason": err.get("message", r.text),
-                "key_prefix": api_key[:8] + "...",
+                "key_preview": api_key[:8] + "...",
+                "available_env_keys": env_keys,
             }), 200
     except Exception as e:
-        return jsonify({"status": "error", "reason": str(e)}), 500
+        return jsonify({
+            "status": "error",
+            "reason": str(e),
+            "available_env_keys": env_keys,
+        }), 500
 

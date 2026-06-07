@@ -34,6 +34,24 @@ _TIMEOUT  = 30.0   # generous timeout — never cut off a long response mid-flig
 _FALLBACK_MAX_TOKENS = 8192   # used if metadata fetch fails
 
 
+def get_gemini_api_key() -> str:
+    """
+    Retrieve Gemini API key checking GOOGLE_API_KEY, GEMINI_API_KEY, and OPENAI_API_KEY.
+    If none are set, scans all environment variables for any value starting with
+    the legacy 'AIzaSy' or modern 'AQ.' prefix.
+    """
+    for key in ["GOOGLE_API_KEY", "GEMINI_API_KEY", "OPENAI_API_KEY"]:
+        val = os.environ.get(key, "").strip()
+        if val:
+            return val
+    # Fallback scan for any environment variable containing a Google/Gemini key prefix
+    for key, val in os.environ.items():
+        val = val.strip()
+        if val.startswith("AIzaSy") or val.startswith("AQ."):
+            return val
+    return ""
+
+
 def _fetch_model_output_limit(api_key: str) -> int:
     """
     Query the Gemini model metadata to get its real outputTokenLimit.
@@ -157,10 +175,10 @@ def call_gemini(
     - If the model hits MAX_TOKENS, we still return the partial text with a warning
       rather than discarding the response.
     """
-    api_key = os.environ.get("GOOGLE_API_KEY", "")
+    api_key = get_gemini_api_key()
     if not api_key:
         return NLPResult(text="", source="fallback",
-                         error="GOOGLE_API_KEY not configured.")
+                         error="Gemini API key not configured. Checked GOOGLE_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY, and AIza/AQ prefix fallbacks.")
 
     if _is_rate_limited(user_id):
         return NLPResult(text="", source="rate_limited",

@@ -69,18 +69,32 @@ def gemini_health():
         }), 500
 
     model = "gemini-1.5-flash-latest"
+    list_all = request.args.get("list_models", "").lower() == "true"
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}?key={api_key}"
+        if list_all:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
+        else:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}?key={api_key}"
+        
         r = req.get(url, timeout=10)
         if r.status_code == 200:
             data = r.json()
-            return jsonify({
-                "status": "ok",
-                "model": data.get("name"),
-                "output_token_limit": data.get("outputTokenLimit"),
-                "key_preview": api_key[:8] + "...",
-                "available_env_keys": env_keys,
-            }), 200
+            if list_all:
+                model_names = [m.get("name") for m in data.get("models", [])]
+                return jsonify({
+                    "status": "ok",
+                    "models": model_names,
+                    "key_preview": api_key[:8] + "...",
+                    "available_env_keys": env_keys,
+                }), 200
+            else:
+                return jsonify({
+                    "status": "ok",
+                    "model": data.get("name"),
+                    "output_token_limit": data.get("outputTokenLimit"),
+                    "key_preview": api_key[:8] + "...",
+                    "available_env_keys": env_keys,
+                }), 200
         else:
             err = r.json().get("error", {})
             return jsonify({

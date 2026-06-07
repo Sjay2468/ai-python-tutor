@@ -26,7 +26,7 @@ _RATE_LIMIT = 20        # calls per user per hour
 _RATE_WINDOW = 3600     # seconds (1 hour)
 
 # ── Gemini REST API config ────────────────────────────────────────────────────
-_MODEL    = "gemini-2.0-flash"
+_MODEL    = "gemini-3.5-flash"
 _API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 _TIMEOUT  = 30.0   # generous timeout — never cut off a long response mid-flight
 

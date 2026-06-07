@@ -68,7 +68,7 @@ def gemini_health():
             "available_env_keys": env_keys,
         }), 500
 
-    model = "gemini-1.5-flash-latest"
+    model = "gemini-2.0-flash"
     list_all = request.args.get("list_models", "").lower() == "true"
     try:
         if list_all:

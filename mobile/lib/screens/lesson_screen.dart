@@ -122,6 +122,17 @@ class _LessonScreenState extends State<LessonScreen>
       ));
     }
 
+    // Section 4b: Playground Practice (Interactive Exercise)
+    final exercise = _getPlaygroundExercise(data['id'] ?? '');
+    if (exercise != null) {
+      _sections.add(_LessonSection(
+        type: _SectionType.playgroundPractice,
+        title: 'Practice Exercise',
+        content: exercise.starterCode,
+        instruction: exercise.instruction,
+      ));
+    }
+
     // Section 5: Key Points
     final keyPoints = data['key_points'] as List<dynamic>?;
     if (keyPoints != null && keyPoints.isNotEmpty) {
@@ -159,6 +170,18 @@ class _LessonScreenState extends State<LessonScreen>
       });
     } else {
       _markReadAndContinue();
+    }
+  }
+
+  void _goToPreviousSection() {
+    if (_currentSection > 0) {
+      _fadeController.reverse().then((_) {
+        _pageController.previousPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+        _fadeController.forward();
+      });
     }
   }
 
@@ -211,6 +234,7 @@ class _LessonScreenState extends State<LessonScreen>
                             sectionNumber: index + 1,
                             totalSections: _sections.length,
                             onNext: _goToNextSection,
+                            onBack: _goToPreviousSection,
                           );
                         },
                       ),
@@ -256,6 +280,7 @@ class _SectionPage extends StatelessWidget {
   final int sectionNumber;
   final int totalSections;
   final VoidCallback onNext;
+  final VoidCallback onBack;
 
   const _SectionPage({
     required this.section,
@@ -263,6 +288,7 @@ class _SectionPage extends StatelessWidget {
     required this.sectionNumber,
     required this.totalSections,
     required this.onNext,
+    required this.onBack,
   });
 
   @override
@@ -306,8 +332,8 @@ class _SectionPage extends StatelessWidget {
 
           const SizedBox(height: 32),
 
-          // Next / Practice button
-          _buildNextButton(context),
+          // Navigation buttons (Back / Next)
+          _buildNavigationButtons(context),
         ],
       ),
     );
@@ -382,6 +408,55 @@ class _SectionPage extends StatelessWidget {
           ),
         );
 
+      case _SectionType.playgroundPractice:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Card(
+              color: AppTheme.primary.withOpacity(0.05),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: AppTheme.primary.withOpacity(0.2)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.assignment_outlined, color: AppTheme.primary, size: 20),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Your Task:',
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      section.instruction ?? '',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            height: 1.5,
+                            color: AppTheme.textPrimary,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: CodeEditorWidget(initialCode: section.content),
+            ),
+          ],
+        );
+
       case _SectionType.keyPoints:
         return Column(
           children: section.keyPoints!.asMap().entries.map((entry) {
@@ -430,9 +505,23 @@ class _SectionPage extends StatelessWidget {
     }
   }
 
-  Widget _buildNextButton(BuildContext context) {
+  Widget _buildNavigationButtons(BuildContext context) {
+    final bool showBack = sectionNumber > 1;
+
+    final backButton = OutlinedButton.icon(
+      onPressed: onBack,
+      icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.primary),
+      label: const Text('Back'),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppTheme.primary,
+        side: const BorderSide(color: AppTheme.primary),
+        padding: const EdgeInsets.symmetric(vertical: 14),
+      ),
+    );
+
     if (isLast) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             padding: const EdgeInsets.all(16),
@@ -458,41 +547,141 @@ class _SectionPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: onNext,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.success,
-            ),
-            icon: const Icon(Icons.sports_esports_outlined,
-                color: Colors.white),
-            label: const Text("I've Read This → Practice"),
+          Row(
+            children: [
+              if (showBack) ...[
+                Expanded(child: backButton),
+                const SizedBox(width: 16),
+              ],
+              Expanded(
+                flex: 2,
+                child: ElevatedButton.icon(
+                  onPressed: onNext,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.success,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  icon: const Icon(Icons.sports_esports_outlined,
+                      color: Colors.white),
+                  label: const Text("I've Read This → Practice"),
+                ),
+              ),
+            ],
           ),
         ],
       );
     }
 
-    return ElevatedButton.icon(
-      onPressed: onNext,
-      icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
-      label: const Text('Next Section'),
+    return Row(
+      children: [
+        if (showBack) ...[
+          Expanded(child: backButton),
+          const SizedBox(width: 16),
+        ],
+        Expanded(
+          flex: 2,
+          child: ElevatedButton.icon(
+            onPressed: onNext,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.primary,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+            icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+            label: const Text('Next Section'),
+          ),
+        ),
+      ],
     );
   }
 }
 
 // ── Data models ───────────────────────────────────────────────────────────────
 
-enum _SectionType { explanation, analogy, codeExample, breakdown, keyPoints }
+enum _SectionType { explanation, analogy, codeExample, breakdown, playgroundPractice, keyPoints }
 
 class _LessonSection {
   final _SectionType type;
   final String title;
   final String content;
   final List<String>? keyPoints;
+  final String? instruction;
 
   const _LessonSection({
     required this.type,
     required this.title,
     required this.content,
     this.keyPoints,
+    this.instruction,
   });
+}
+
+class _PlaygroundExercise {
+  final String instruction;
+  final String starterCode;
+
+  const _PlaygroundExercise({
+    required this.instruction,
+    required this.starterCode,
+  });
+}
+
+_PlaygroundExercise? _getPlaygroundExercise(String topicId) {
+  switch (topicId) {
+    case 'L01':
+    case 'L1':
+      return const _PlaygroundExercise(
+        instruction: 'Create a variable named `age` and assign the integer value `21` to it. Then print the value of `age`.',
+        starterCode: '# Create your variable below\n\n',
+      );
+    case 'L02':
+    case 'L2':
+      return const _PlaygroundExercise(
+        instruction: 'Calculate the area of a rectangle with length `10` and width `5` using multiplication (`*`). Print the result.',
+        starterCode: 'length = 10\nwidth = 5\n# Calculate and print the area\n',
+      );
+    case 'L03':
+    case 'L3':
+      return const _PlaygroundExercise(
+        instruction: "Use `input()` to ask for the user's name, store it in a variable called `name`, and print 'Hello ' followed by the name.",
+        starterCode: '# Ask for name and print hello greeting\n',
+      );
+    case 'L04':
+    case 'L4':
+      return const _PlaygroundExercise(
+        instruction: "Write an `if` statement that checks if the variable `score` is greater than or equal to `50`. If it is, print 'Pass', otherwise print 'Fail'.",
+        starterCode: 'score = 75\n# Write your conditional check below\n',
+      );
+    case 'L05':
+    case 'L5':
+      return const _PlaygroundExercise(
+        instruction: 'Write a `for` loop using `range()` to print the numbers from `1` to `5` inclusive.',
+        starterCode: '# Write your loop below\n',
+      );
+    case 'L06':
+    case 'L6':
+      return const _PlaygroundExercise(
+        instruction: "Define a function named `greet` that takes a parameter `name` and returns 'Hello ' followed by the name. Call it with 'Alice' and print the result.",
+        starterCode: '# Define your greet function below and call it\n',
+      );
+    case 'L07':
+    case 'L7':
+      return const _PlaygroundExercise(
+        instruction: "Given the list of fruits, append the string 'orange' to it, and then print the third item (index 2) of the list.",
+        starterCode: "fruits = ['apple', 'banana']\n# Append 'orange' and print index 2\n",
+      );
+    case 'L08':
+    case 'L8':
+      return const _PlaygroundExercise(
+        instruction: "Given the student dictionary, add a new key `grade` with the value 'A', and print the updated dictionary.",
+        starterCode: "student = {'name': 'John', 'age': 18}\n# Add key 'grade' and print student\n",
+      );
+    case 'L09':
+    case 'L9':
+      return const _PlaygroundExercise(
+        instruction: "Fix the syntax error in the code below so it prints 'Debug success!' without any errors.",
+        starterCode: "print(\"Debug success!) # Fix this line\n",
+      );
+    default:
+      return null;
+  }
 }

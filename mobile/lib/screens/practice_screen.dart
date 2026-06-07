@@ -22,16 +22,8 @@ class _PracticeScreenState extends State<PracticeScreen>
   bool _isLoading = true;
   List<dynamic>? _questions;
   int _currentIndex = 0;
-  int _correctCount = 0;
-
-  // Per-question state
-  String? _selectedOption;
+  List<_QuestionProgressState> _questionStates = [];
   bool _isSubmitting = false;
-  bool _isAnswerLocked = false; // true once user submits
-  bool _isCorrect = false;
-  String? _feedbackHint;
-  String? _correctOption; // "A" / "B" / "C" / "D"
-  String? _correctOptionText; // full text of correct option
 
   @override
   void initState() {
@@ -46,30 +38,28 @@ class _PracticeScreenState extends State<PracticeScreen>
       setState(() {
         if (data != null && data.containsKey('questions')) {
           _questions = data['questions'];
+          _questionStates = List.generate(
+            _questions!.length,
+            (_) => _QuestionProgressState(),
+          );
         } else if (data != null && data.containsKey('message')) {
           _questions = []; // mastered
+          _questionStates = [];
         } else {
           _questions = null;
+          _questionStates = [];
         }
         _isLoading = false;
       });
     }
   }
 
-  void _resetQuestionState() {
-    _selectedOption = null;
-    _isAnswerLocked = false;
-    _isCorrect = false;
-    _feedbackHint = null;
-    _correctOption = null;
-    _correctOptionText = null;
-  }
-
   Future<void> _submitAnswer() async {
-    if (_selectedOption == null || _isAnswerLocked) return;
+    final state = _questionStates[_currentIndex];
+    if (state.selectedOption == null || state.isAnswerLocked) return;
     setState(() {
       _isSubmitting = true;
-      _isAnswerLocked = true; // lock immediately on submit
+      state.isAnswerLocked = true; // lock immediately on submit
     });
 
     final currentQ = _questions![_currentIndex];
@@ -78,7 +68,7 @@ class _PracticeScreenState extends State<PracticeScreen>
     final result = await _api.submitAnswer(
       widget.topicId,
       questionId,
-      _selectedOption!,
+      state.selectedOption!,
       1, // always attempt 1 — hint progression removed in favour of locking
     );
 
@@ -86,20 +76,26 @@ class _PracticeScreenState extends State<PracticeScreen>
     setState(() {
       _isSubmitting = false;
       if (result != null) {
-        _isCorrect = result['correct'] ?? false;
-        _feedbackHint = result['hint'] as String?;
-        _correctOption = result['correct_option'] as String?;
-        _correctOptionText = result['correct_option_text'] as String?;
-        if (_isCorrect) _correctCount++;
+        state.isCorrect = result['correct'] ?? false;
+        state.feedbackHint = result['hint'] as String?;
+        state.correctOption = result['correct_option'] as String?;
+        state.correctOptionText = result['correct_option_text'] as String?;
       }
     });
+  }
+
+  void _prevQuestion() {
+    if (_currentIndex > 0) {
+      setState(() {
+        _currentIndex--;
+      });
+    }
   }
 
   void _nextQuestion() {
     if (_currentIndex < _questions!.length - 1) {
       setState(() {
         _currentIndex++;
-        _resetQuestionState();
       });
     } else {
       _finishPractice();
@@ -108,7 +104,7 @@ class _PracticeScreenState extends State<PracticeScreen>
 
   Future<void> _finishPractice() async {
     final total = _questions!.length;
-    final correct = _correctCount;
+    final correct = _questionStates.where((q) => q.isCorrect).length;
 
     // Show score splash then call complete API
     await _showScoreSplash(correct, total);
@@ -157,29 +153,27 @@ class _PracticeScreenState extends State<PracticeScreen>
   // ── Option button builder ─────────────────────────────────────────────────
 
   Widget _buildOptionButton(String key, String text) {
-    final isSelected = _selectedOption == key;
-    final isCorrectKey = _correctOption == key;
+    final state = _questionStates[_currentIndex];
+    final isSelected = state.selectedOption == key;
+    final isCorrectKey = state.correctOption == key;
 
     Color bgColor = AppTheme.surface;
     Color borderColor = AppTheme.divider;
     Color textColor = AppTheme.textPrimary;
     Widget? trailingIcon;
 
-    if (_isAnswerLocked) {
+    if (state.isAnswerLocked) {
       if (isCorrectKey) {
-        // Always highlight the correct answer in green
         bgColor = AppTheme.success.withOpacity(0.1);
         borderColor = AppTheme.success;
         textColor = AppTheme.success;
         trailingIcon = const Icon(Icons.check_circle, color: AppTheme.success, size: 20);
-      } else if (isSelected && !_isCorrect) {
-        // Highlight wrong selection in red
+      } else if (isSelected && !state.isCorrect) {
         bgColor = AppTheme.error.withOpacity(0.08);
         borderColor = AppTheme.error;
         textColor = AppTheme.error;
         trailingIcon = const Icon(Icons.cancel, color: AppTheme.error, size: 20);
       } else {
-        // Dim other options
         bgColor = AppTheme.surface;
         borderColor = AppTheme.divider.withOpacity(0.4);
         textColor = AppTheme.textSecondary.withOpacity(0.5);
@@ -199,19 +193,18 @@ class _PracticeScreenState extends State<PracticeScreen>
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: borderColor,
-          width: isSelected || (isCorrectKey && _isAnswerLocked) ? 2 : 1,
+          width: isSelected || (isCorrectKey && state.isAnswerLocked) ? 2 : 1,
         ),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: _isAnswerLocked
+        onTap: state.isAnswerLocked
             ? null
-            : () => setState(() => _selectedOption = key),
+            : () => setState(() => state.selectedOption = key),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // Circle label
               Container(
                 width: 32,
                 height: 32,
@@ -219,7 +212,7 @@ class _PracticeScreenState extends State<PracticeScreen>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: borderColor),
-                  color: (isSelected && !_isAnswerLocked)
+                  color: (isSelected && !state.isAnswerLocked)
                       ? AppTheme.primary
                       : Colors.transparent,
                 ),
@@ -227,7 +220,7 @@ class _PracticeScreenState extends State<PracticeScreen>
                   key.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: (isSelected && !_isAnswerLocked)
+                    color: (isSelected && !state.isAnswerLocked)
                         ? Colors.white
                         : textColor,
                     fontSize: 13,
@@ -260,21 +253,22 @@ class _PracticeScreenState extends State<PracticeScreen>
   // ── Feedback area ─────────────────────────────────────────────────────────
 
   Widget _buildFeedback() {
-    if (!_isAnswerLocked) return const SizedBox.shrink();
+    final state = _questionStates[_currentIndex];
+    if (!state.isAnswerLocked) return const SizedBox.shrink();
 
     return AnimatedOpacity(
-      opacity: _isAnswerLocked ? 1.0 : 0.0,
+      opacity: state.isAnswerLocked ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 300),
       child: Container(
         margin: const EdgeInsets.only(bottom: 24),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: _isCorrect
+          color: state.isCorrect
               ? AppTheme.success.withOpacity(0.08)
               : AppTheme.error.withOpacity(0.08),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: _isCorrect ? AppTheme.success : AppTheme.error,
+            color: state.isCorrect ? AppTheme.success : AppTheme.error,
           ),
         ),
         child: Column(
@@ -284,35 +278,35 @@ class _PracticeScreenState extends State<PracticeScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
-                  _isCorrect ? Icons.check_circle : Icons.info_outline,
-                  color: _isCorrect ? AppTheme.success : AppTheme.error,
+                  state.isCorrect ? Icons.check_circle : Icons.info_outline,
+                  color: state.isCorrect ? AppTheme.success : AppTheme.error,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    _isCorrect
+                    state.isCorrect
                         ? '✅ Correct! Well done.'
                         : '❌ Not quite.',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: _isCorrect ? AppTheme.success : AppTheme.error,
+                          color: state.isCorrect ? AppTheme.success : AppTheme.error,
                           fontSize: 16,
                         ),
                   ),
                 ),
               ],
             ),
-            if (_feedbackHint != null && _feedbackHint!.isNotEmpty) ...[
+            if (state.feedbackHint != null && state.feedbackHint!.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                _feedbackHint!,
+                state.feedbackHint!,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppTheme.textSecondary,
                     ),
               ),
             ],
-            if (!_isCorrect &&
-                _correctOption != null &&
-                _correctOptionText != null) ...[
+            if (!state.isCorrect &&
+                state.correctOption != null &&
+                state.correctOptionText != null) ...[
               const SizedBox(height: 10),
               Container(
                 padding:
@@ -332,7 +326,7 @@ class _PracticeScreenState extends State<PracticeScreen>
                           ),
                     ),
                     Text(
-                      '$_correctOption. $_correctOptionText',
+                      '${state.correctOption}. ${state.correctOptionText}',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: AppTheme.success,
                           ),
@@ -414,6 +408,8 @@ class _PracticeScreenState extends State<PracticeScreen>
     final options =
         (currentQ['options'] as Map<String, dynamic>? ?? {});
     final isLastQuestion = _currentIndex == _questions!.length - 1;
+    final state = _questionStates[_currentIndex];
+    final showPrev = _currentIndex > 0;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
@@ -438,7 +434,7 @@ class _PracticeScreenState extends State<PracticeScreen>
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '✓ $_correctCount correct',
+                  '✓ ${_questionStates.where((q) => q.isCorrect).length} correct',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: AppTheme.primary,
                         fontSize: 12,
@@ -470,37 +466,64 @@ class _PracticeScreenState extends State<PracticeScreen>
           // Feedback
           _buildFeedback(),
 
-          // Action button
-          if (!_isAnswerLocked)
-            ElevatedButton(
-              onPressed:
-                  (_selectedOption == null || _isSubmitting) ? null : _submitAnswer,
-              child: _isSubmitting
-                  ? const SizedBox(
-                      height: 22,
-                      width: 22,
-                      child: CircularProgressIndicator(
-                          color: Colors.white, strokeWidth: 2),
-                    )
-                  : const Text('Submit Answer'),
-            )
-          else
-            ElevatedButton.icon(
-              onPressed: _nextQuestion,
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    _isCorrect ? AppTheme.success : AppTheme.primary,
+          // Navigation and Action buttons
+          Row(
+            children: [
+              if (showPrev) ...[
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _prevQuestion,
+                    icon: const Icon(Icons.arrow_back_rounded, color: AppTheme.primary),
+                    label: const Text('Back'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppTheme.primary,
+                      side: const BorderSide(color: AppTheme.primary),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+              Expanded(
+                flex: 2,
+                child: !state.isAnswerLocked
+                    ? ElevatedButton(
+                        onPressed:
+                            (state.selectedOption == null || _isSubmitting)
+                                ? null
+                                : _submitAnswer,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        child: _isSubmitting
+                            ? const SizedBox(
+                                height: 22,
+                                width: 22,
+                                child: CircularProgressIndicator(
+                                    color: Colors.white, strokeWidth: 2),
+                              )
+                            : const Text('Submit Answer'),
+                      )
+                    : ElevatedButton.icon(
+                        onPressed: _nextQuestion,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              state.isCorrect ? AppTheme.success : AppTheme.primary,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        icon: Icon(
+                          isLastQuestion
+                              ? Icons.emoji_events_outlined
+                              : Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                        ),
+                        label: Text(
+                          isLastQuestion ? 'See Results' : 'Next Question',
+                        ),
+                      ),
               ),
-              icon: Icon(
-                isLastQuestion
-                    ? Icons.emoji_events_outlined
-                    : Icons.arrow_forward_rounded,
-                color: Colors.white,
-              ),
-              label: Text(
-                isLastQuestion ? 'See Results' : 'Next Question',
-              ),
-            ),
+            ],
+          ),
         ],
       ),
     );
@@ -718,4 +741,13 @@ class _ScoreSplashDialogState extends State<_ScoreSplashDialog>
       ),
     );
   }
+}
+
+class _QuestionProgressState {
+  String? selectedOption;
+  bool isAnswerLocked = false;
+  bool isCorrect = false;
+  String? feedbackHint;
+  String? correctOption;
+  String? correctOptionText;
 }
